@@ -1,6 +1,56 @@
 .header {
+  padding: 1rem;
+  /* background: url(./assets/nice.jpg) center no-repeat;
+  background-size: cover;
+  position: relative;
+  height: 80vh; */
+}
+
+.header-container {
+  padding: 1rem 0;
   background: url(./assets/nice.jpg) center no-repeat;
   background-size: cover;
   position: relative;
-  height:80vh;
+  height: 80vh;
+}
+
+.rounded-lg {
+  border-radius: 40px;
+}
+
+.header-sides {
+  background-color: white;
+  width: 15vw;
+  padding: 2rem;
+  margin-top: -2rem;
+}
+
+.header-sides a {
+  text-decoration: none;
+  color: black;
+}
+
+.bg-grey {
+  background-color: #d9d9d9;
+}
+
+.navbar {
+  --bs-navbar-padding-y: 0 !important;
+}
+
+.centered {
+  width: 50%;
+  margin: auto;
+  padding-top: 15%;
+}
+
+.hamburger-menu {
+  --bs-navbar-color: rgba(255, 255, 255, 0.55);
+  --bs-navbar-hover-color: rgba(255, 255, 255, 0.75);
+  --bs-navbar-disabled-color: rgba(255, 255, 255, 0.25);
+  --bs-navbar-active-color: #fff;
+  --bs-navbar-brand-color: #fff;
+  --bs-navbar-brand-hover-color: #fff;
+  --bs-navbar-toggler-border-color: rgba(255, 255, 255, 0.1);
+  --bs-navbar-toggler-icon-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1.0)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
 }

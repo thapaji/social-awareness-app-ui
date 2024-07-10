@@ -5,54 +5,73 @@ import { Link } from "react-router-dom";
 export const Header = () => {
   return (
     <div className="header">
-      <Row className="p-4">
-        <Col lg={1}>
-          <Link className="navbar-brand">Cause Chronicle</Link>
-        </Col>
-        <Col className="px-4">
-          <Row>
-            <Col className="px-4 d-flex justify-content-between">
-              <Col className="d-grid">
-                <Button className="rounded" variant="light">
-                  Following
-                </Button>
+      <div className="header-container">
+        <Row className="">
+          <Col lg={8}>
+            <Row>
+              <Col className="header-sides rounded-lg" lg={1}>
+                <Link className="">Cause Chronicle</Link>
               </Col>
-              <Col className="d-grid">
-                {" "}
-                <Button className="rounded" variant="light">
-                  New
-                </Button>
+              <Col className="p-2 ms-4 bg-grey rounded-lg">
+                <Col className="d-flex justify-content-between">
+                  <Col className="d-grid p-1">
+                    <Button className="rounded-lg" variant="light">
+                      Following
+                    </Button>
+                  </Col>
+                  <Col className="d-grid p-1">
+                    {" "}
+                    <Button className="rounded-lg" variant="light">
+                      New
+                    </Button>
+                  </Col>
+                  <Col className="d-grid p-1">
+                    <Button className="rounded-lg" variant="light">
+                      Popular
+                    </Button>
+                  </Col>
+                </Col>
               </Col>
-              <Col className="d-grid">
-                <Button className="rounded" variant="light">
-                  Popular
-                </Button>
-              </Col>
-            </Col>
-            <Col lg={1}>
-              <Navbar expand="" className="bg-body-tertiary">
-                <Container>
-                  {/* <Navbar.Brand href="#home">Menu</Navbar.Brand> */}
-                  <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                  <Navbar.Collapse id="basic-navbar-nav">
-                    <Nav className="me-auto">
-                      <Nav.Link href="#home">Home</Nav.Link>
-                      <Nav.Link href="#link">Link</Nav.Link>
+            </Row>
+          </Col>
+          <Col>
+            <Row>
+              <Col>{""}</Col>
+
+              <Col className="">
+                <Navbar expand="">
+                  <Navbar.Toggle
+                    aria-controls="basic-navbar-nav"
+                    className="hamburger-menu bg-dark"
+                  />
+                  <Navbar.Collapse id="basic-navbar-nav" className="bg-dark  mt-1 ps-2">
+                    <Nav>
+                      <Nav.Link href="#home" className="text-white">
+                        Home
+                      </Nav.Link>
+                      <Nav.Link href="#link" className="text-white">
+                        Link
+                      </Nav.Link>
                     </Nav>
                   </Navbar.Collapse>
-                </Container>
-              </Navbar>
-            </Col>
-          </Row>
-        </Col>
-        <Col lg={1}>
-          {" "}
-          <Link className="navbar-brand">Name</Link>
-        </Col>
-      </Row>
-      <Row>
-        <Form.Control type="text" style={{ width: "50%", margin: "auto" }} />
-      </Row>
+                </Navbar>
+              </Col>
+            </Row>
+          </Col>
+          <Col lg={1}>
+            <Row>
+              <Col className="header-sides rounded-lg" lg={1}>
+                <Link className="">Cause Chronicle</Link>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+        <Row className="centered">
+          <Col>
+            <Form.Control type="text" />
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 };
