@@ -13,6 +13,9 @@ import UserVerification from "./pages/UserVerification";
 import Profile from "./pages/Profile";
 import { Auth } from "./components/Auth";
 import { UserLayout } from "./components/layouts/UserLayout";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
+import NeedSupport from "./pages/NeedSupport";
 
 const App = () => {
   // const dispatch = useDispatch();
@@ -27,8 +30,11 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/verify-user" element={<UserVerification />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/need-support" element={<NeedSupport />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
-        <Route path="/admin/new" element={<Register />} />
+        <Route path="/user/new" element={<Register />} />
         /************** Private Routes ****************/
         {/* <Route
           path="/"
