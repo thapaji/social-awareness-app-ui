@@ -18,11 +18,6 @@ import About from "./pages/About";
 import NeedSupport from "./pages/NeedSupport";
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(autoLogin());
-  // }, []);
-
   return (
     <>
       <Routes>
@@ -36,17 +31,6 @@ const App = () => {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/user/new" element={<Register />} />
         /************** Private Routes ****************/
-        {/* <Route
-          path="/"
-          element={
-            <Auth>
-              <UserLayout />
-            </Auth>
-          }
-        >
-          <Route path="/user/profile" element={<Profile />} />
-          <Route path="/user/change-password" element={<ChangePassword />} />
-        </Route> */}
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
       </Routes>
       <ToastContainer />
