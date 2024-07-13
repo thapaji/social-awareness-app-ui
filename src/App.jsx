@@ -30,7 +30,7 @@ const App = () => {
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/admin/new" element={<Register />} />
         /************** Private Routes ****************/
-        <Route
+        {/* <Route
           path="/"
           element={
             <Auth>
@@ -40,7 +40,7 @@ const App = () => {
         >
           <Route path="/user/profile" element={<Profile />} />
           <Route path="/user/change-password" element={<ChangePassword />} />
-        </Route>
+        </Route> */}
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
       </Routes>
       <ToastContainer />
