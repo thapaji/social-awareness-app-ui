@@ -16,8 +16,6 @@ body {
   transform: translateY(-50%);
   bottom: initial;
   text-align: center;
-  /* color: rgb(218, 52, 125); */
-  /* filter: drop-shadow(2px 2px 20px cyan); */
 }
 
 .carousel-item {
@@ -33,3 +31,33 @@ body {
   background-color: rgba(0, 0, 0, 0.4);
 }
 
+.form-group {
+  position: relative;
+}
+
+.error-bubble {
+  position: absolute;
+  background: #f8d7da;
+  color: #721c24;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  left: calc(100% + 1rem);
+  top: 45%;
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.error-bubble::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -8px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #f8d7da;
+}

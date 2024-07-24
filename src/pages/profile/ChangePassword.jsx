@@ -2,7 +2,7 @@ import React from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
-import { CustomInput } from "../components/CustomInput";
+import { CustomInput } from "../../components/CustomInput";
 // import { updatePassword } from "../../features/users/userAction";
 
 const ChangePassword = () => {

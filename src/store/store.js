@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import userReducer from "../features/users/userSlice";
+import userReducer from "../pages/user/userSlice";
 // import systemReducer from "./systemSlice";
 
 export default configureStore({
     reducer: {
-        // userInfo: userReducer,
+        userInfo: userReducer,
         // system: systemReducer,
     }
 })

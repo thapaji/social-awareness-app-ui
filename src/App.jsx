@@ -1,21 +1,15 @@
 import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-// import { Auth } from "./components/auth/Auth";
-import { useDispatch } from "react-redux";
-// import { autoLogin } from "./features/users/userAction";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import ChangePassword from "./pages/ChangePassword";
-import ForgetPassword from "./pages/ForgetPassword";
+// import { useDispatch } from "react-redux";
 import Home from "./pages/Home";
 import UserVerification from "./pages/UserVerification";
-import Profile from "./pages/Profile";
-import { Auth } from "./components/Auth";
-import { UserLayout } from "./components/layouts/UserLayout";
-import Contact from "./pages/Contact";
-import About from "./pages/About";
-import NeedSupport from "./pages/NeedSupport";
+import Login from "./pages/user/Login";
+import ForgetPassword from "./pages/user/ForgetPassword";
+import Register from "./pages/user/Register";
+import About from "./pages/static/About";
+import Contact from "./pages/static/Contact";
+import NeedSupport from "./pages/static/NeedSupport";
 
 const App = () => {
   return (

@@ -1,7 +1,7 @@
 import React from "react";
-import { UserLayout } from "../components/layouts/UserLayout";
+import { UserLayout } from "../../components/layouts/UserLayout";
 import { Button, Container, Form } from "react-bootstrap";
-import { CustomInput } from "../components/CustomInput";
+import { CustomInput } from "../../components/CustomInput";
 
 const Contact = () => {
   const inputs = [

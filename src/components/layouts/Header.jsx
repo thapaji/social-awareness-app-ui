@@ -5,11 +5,12 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 
 export const Header = () => {
   return (
-    <Navbar className="p-3">
+    <Navbar className="p-3" expand="lg">
       <Container>
-        <Navbar.Brand to="/">
+        <Link className="navbar-brand" to="/">
+          {" "}
           <img src={logo} alt="logo" style={{ width: "8rem" }} />
-        </Navbar.Brand>
+        </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
