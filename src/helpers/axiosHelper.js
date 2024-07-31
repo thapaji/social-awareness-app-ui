@@ -9,10 +9,10 @@ export const apiProcessor = async ({ method, url, data, isPrivate }) => {
     return response.data;
   } catch (error) {
     console.log(error);
-    return {
+    return error.response?.data && error.response.data || {
       status: "error",
       message: error.message,
-    };
+    }
   }
 }
 
