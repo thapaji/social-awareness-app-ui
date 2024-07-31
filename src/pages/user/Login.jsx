@@ -37,12 +37,14 @@ const Login = () => {
     { label: "Password", name: "password", type: "password", placeholder: "Enter password" },
   ];
 
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
     if (!data.email || !data.password) {
       return toast.error("Please enter email and/or password");
     }
-    const status = dispatch(loginAction(data));
-    console.log(status);
+    const status = await dispatch(loginAction(data));
+    if (status === "success") {
+      navigate("/");
+    }
   };
 
   return (

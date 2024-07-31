@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 export const Header = () => {
   return (
@@ -26,12 +27,18 @@ export const Header = () => {
             <Link className="nav-link" to="/contact">
               Contact
             </Link>
-            <Link className="nav-link" to="/login">
+            {/* <Link className="nav-link" to="/login">
               Log In
             </Link>
             <Link className="nav-link" to="/user/new">
               Sign Up
-            </Link>
+            </Link> */}
+            <SignedOut>
+              <SignInButton className="nav-link" />
+            </SignedOut>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
           </Nav>
         </Navbar.Collapse>
       </Container>

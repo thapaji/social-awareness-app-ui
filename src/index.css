@@ -4,7 +4,7 @@ body {
 
 .nav-link {
   font-weight: 500;
-  color: rgb(102, 159, 210);
+  color: rgb(102, 159, 210) !important;
 }
 
 .slider-image {

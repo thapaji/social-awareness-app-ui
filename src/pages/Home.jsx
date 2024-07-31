@@ -1,19 +1,35 @@
 import React from "react";
 import { UserLayout } from "../components/layouts/UserLayout";
-import { Col } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { EventsList } from "../components/EventsList";
 import Hero from "../components/Hero";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { CausesList } from "../components/CausesList";
+import { Advertisements } from "../components/Advertisements";
 
 const Home = () => {
+  const getUserSession = async () => {
+    const token = await useAuth().getToken();
+    console.log(token);
+    return token;
+  };
+  const user = getUserSession();
+  // console.log(user);
   return (
     <UserLayout>
-      <Hero/>
-      {/* <Col>Causes near you</Col>
-      <Col>
-        <EventsList />
-      </Col> */}
+      <Hero />
+      <Container>
+        <Row>
+          <Col md={8}>
+            <CausesList />
+            <EventsList />
+          </Col>
+          <Col md={4}>
+            <Advertisements />
+          </Col>
+        </Row>
+      </Container>
     </UserLayout>
   );
 };
-
 export default Home;

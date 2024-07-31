@@ -1,56 +1,22 @@
 import React from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import run from "../assets/run.jpg";
+import workshop from "../assets/acc.png";
+import speak from "../assets/pro.png";
+import { CommonCards } from "./CommonCards";
 
 export const EventsList = () => {
+  const text = `The City2Surf serves multiple purposes: it promotes physical fitness and community
+              engagement, provides a platform for fundraising for various charities, and offers
+              participants the opportunity to enjoy a scenic race route from Sydney's city center to
+              Bondi Beach.`;
   return (
     <>
-      <h1>Recent Causes</h1>
-      <hr />
-      <Row>
-        <Col>
-          <Row>
-            <h2>City To Surf</h2>
-          </Row>
-          <Row>
-            <p>
-              The City2Surf serves multiple purposes: it promotes physical fitness and community
-              engagement, provides a platform for fundraising for various charities, and offers
-              participants the opportunity to enjoy a scenic race route from Sydney's city center to
-              Bondi Beach.
-            </p>
-          </Row>
-          <Row>
-            <Button className="bg-grey rounded">Find out more...</Button>
-          </Row>
-        </Col>
-        <Col>
-          {" "}
-          <img src={run} alt="event" width={"20vw"} />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Row>
-            <h2>City To Surf</h2>
-          </Row>
-          <Row>
-            <p>
-              The City2Surf serves multiple purposes: it promotes physical fitness and community
-              engagement, provides a platform for fundraising for various charities, and offers
-              participants the opportunity to enjoy a scenic race route from Sydney's city center to
-              Bondi Beach.
-            </p>
-          </Row>
-          <Row>
-            <Button className="bg-grey rounded">Find out more...</Button>
-          </Row>
-        </Col>
-        <Col>
-          {" "}
-          <img src={run} alt="event" width={"20vw"} />
-        </Col>
-      </Row>
+      <h2 className="mt-4">Upcoming Events</h2>
+      <hr className="mb-4" />
+      <CommonCards image={run} title="City2Surf" text={text} />
+      <CommonCards image={workshop} title="Accelerate Her Workshop" text={text} />
+      <CommonCards image={speak} title="Speak like a pro" text={text} />
     </>
   );
 };
