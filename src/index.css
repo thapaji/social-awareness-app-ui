@@ -7,6 +7,10 @@ body {
   color: rgb(102, 159, 210) !important;
 }
 
+.admin-nav{
+  color: rgb(235, 7, 126) !important;
+}
+
 .slider-image {
   backdrop-filter: blur(2px);
 }

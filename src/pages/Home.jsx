@@ -8,13 +8,6 @@ import { CausesList } from "../components/CausesList";
 import { Advertisements } from "../components/Advertisements";
 
 const Home = () => {
-  const getUserSession = async () => {
-    const token = await useAuth().getToken();
-    console.log(token);
-    return token;
-  };
-  const user = getUserSession();
-  // console.log(user);
   return (
     <UserLayout>
       <Hero />
