@@ -14,7 +14,7 @@ const NeedSupport = () => {
           <Row>
             <Col className="align-right" sm={5}>
               <Card className="clickable-card accent-bg" style={{ width: "85%" }}>
-                <Link>
+                <Link to="/need-support/business">
                   <div className="d-flex justify-content-center">
                     <Card.Img variant="top" src={business} style={{ width: "50%" }} />
                   </div>
@@ -29,7 +29,7 @@ const NeedSupport = () => {
             </Col>
             <Col sm={5}>
               <Card className="clickable-card accent-bg" style={{ width: "85%" }}>
-                <Link>
+                <Link to="/need-support/awarness">
                   <div className="d-flex justify-content-center">
                     <Card.Img variant="top" src={awarness} style={{ width: "50%" }} />
                   </div>
