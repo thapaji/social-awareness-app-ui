@@ -9,8 +9,8 @@ import ForgetPassword from "./pages/user/ForgetPassword";
 import Register from "./pages/user/Register";
 import About from "./pages/static/About";
 import Contact from "./pages/static/Contact";
-import NeedSupport from "./pages/static/NeedSupport";
 import Dashboard from "./pages/admin/Dashboard";
+import NeedSupport from "./pages/admin/NeedSupport";
 
 const App = () => {
   return (

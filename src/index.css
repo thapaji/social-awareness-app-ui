@@ -1,14 +1,60 @@
+:root {
+  --primary-color: rgb(102, 159, 210);
+  --secondary-color: rgb(235, 7, 126);
+  --accent-color: rgb(216, 232, 245);
+}
+
 body {
   font-family: "Poppins", sans-serif;
 }
-
-.nav-link {
-  font-weight: 500;
-  color: rgb(102, 159, 210) !important;
+a {
+  text-decoration: none;
 }
 
-.admin-nav{
-  color: rgb(235, 7, 126) !important;
+h1 {
+  color: var(--secondary-color);
+  text-align: center;
+  margin: 3.5rem 0;
+}
+
+.primary-color {
+  color: var(--primary-color) !important;
+}
+
+.secondary-color {
+  color: var(--secondary-color) !important;
+}
+
+.accent-color {
+  color: var(--accent-color) !important;
+}
+
+.accent-bg {
+  background-color: var(--accent-color);
+}
+
+.navbar {
+  height: 20vh;
+}
+
+.full-height-content {
+  min-height: 80vh;
+}
+
+.nav-link {
+  position: relative;
+  font-weight: 500;
+  color: var(--primary-color) !important;
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--secondary-color) !important;
+}
+
+.nav-link.active {
+  color: var(--secondary-color) !important;
+  border-bottom: 2px solid var(--secondary-color) !important;
 }
 
 .slider-image {
@@ -64,4 +110,22 @@ body {
   border-top: 8px solid transparent;
   border-bottom: 8px solid transparent;
   border-right: 8px solid #f8d7da;
+}
+
+.clickable-card {
+  transition: transform 0.3s ease;
+  border: none !important;
+}
+
+.clickable-card:hover {
+  transform: scale(1.1);
+}
+
+.clickable-card h3 {
+  color: var(--secondary-color) !important;
+}
+
+.align-right {
+  display: flex;
+  justify-content: flex-end;
 }

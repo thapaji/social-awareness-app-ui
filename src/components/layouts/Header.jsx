@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { SignedIn, SignedOut, SignInButton, UserButton, useUser } from "@clerk/clerk-react";
@@ -9,33 +9,33 @@ export const Header = () => {
   const userRole = user?.publicMetadata?.role;
 
   return (
-    <Navbar className="p-3 shadow mb-4" expand="lg">
+    <Navbar className="p-3 shadow" expand="lg">
       <Container>
-        <Link className="navbar-brand" to="/">
+        <NavLink className="navbar-brand" to="/">
           <img src={logo} alt="logo" style={{ width: "8rem" }} />
-        </Link>
+        </NavLink>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
             {userRole?.includes("admin") && (
               <>
-                <Link className="nav-link admin-nav" to="/admin/dashboard">
+                <NavLink className="nav-link admin-nav" to="/admin/dashboard">
                   Dashboard
-                </Link>
+                </NavLink>
               </>
             )}
-            <Link to="/" className="nav-link">
+            <NavLink to="/" className="nav-link" activeClassName="active">
               Home
-            </Link>
-            <Link className="nav-link" to="/about">
+            </NavLink>
+            <NavLink className="nav-link" to="/about" activeClassName="active">
               About Us
-            </Link>
-            <Link className="nav-link" to="/need-support">
+            </NavLink>
+            <NavLink className="nav-link" to="/need-support" activeClassName="active">
               Need Support?
-            </Link>
-            <Link className="nav-link" to="/contact">
+            </NavLink>
+            <NavLink className="nav-link" to="/contact" activeClassName="active">
               Contact
-            </Link>
+            </NavLink>
             <SignedOut>
               <SignInButton className="nav-link" />
             </SignedOut>
