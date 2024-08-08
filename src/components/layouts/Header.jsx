@@ -19,21 +19,21 @@ export const Header = () => {
           <Nav className="ms-auto">
             {userRole?.includes("admin") && (
               <>
-                <NavLink className="nav-link admin-nav" to="/admin/dashboard">
+                <NavLink className="nav-link" to="/admin/dashboard">
                   Dashboard
                 </NavLink>
               </>
             )}
-            <NavLink to="/" className="nav-link" activeClassName="active">
+            <NavLink to="/" className="nav-link">
               Home
             </NavLink>
-            <NavLink className="nav-link" to="/about" activeClassName="active">
+            <NavLink className="nav-link" to="/about">
               About Us
             </NavLink>
-            <NavLink className="nav-link" to="/need-support" activeClassName="active">
+            <NavLink className="nav-link" to="/need-support">
               Need Support?
             </NavLink>
-            <NavLink className="nav-link" to="/contact" activeClassName="active">
+            <NavLink className="nav-link" to="/contact">
               Contact
             </NavLink>
             <SignedOut>

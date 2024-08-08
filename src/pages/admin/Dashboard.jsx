@@ -1,28 +1,17 @@
 import React from "react";
-import { UserLayout } from "../../components/layouts/UserLayout";
-import { Col, Container, Row, Stack } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { AdminLayout } from "../../components/layouts/AdminLayout";
+import { Col, Row, Stack } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
+import { FaUsers, FaHeart, FaCalendarAlt, FaCogs, FaUserShield } from "react-icons/fa";
 
 const Dashboard = () => {
   return (
-    <UserLayout>
-      <Row>
-        <Col sm={3} className="border-end p-3" style={{ minHeight: "80vh" }}>
-          <Stack gap={3}>
-            <Link className="ms-4 p-4 nav-link admin-nav">Users</Link>
-            <Link className="ms-4 p-4 nav-link admin-nav">Causes</Link>
-            <Link className="ms-4 p-4 nav-link admin-nav">Events</Link>
-            <Link className="ms-4 p-4 nav-link admin-nav">Events</Link>
-            <Link className="ms-4 p-4 nav-link admin-nav">Users</Link>
-            <Link className="ms-4 p-4 nav-link admin-nav">Admins</Link>
-          </Stack>
-        </Col>
-        <Col>
-          <h2>Welcome to your dashboard</h2>
-          <hr />
-        </Col>
-      </Row>
-    </UserLayout>
+    <AdminLayout>
+      <div className="accent-bg p-4">
+        <h1 className="dash-heading">Dashboard</h1>
+        <hr />
+      </div>
+    </AdminLayout>
   );
 };
 

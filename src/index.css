@@ -17,12 +17,22 @@ h1 {
   margin: 3.5rem 0;
 }
 
+.dash-heading {
+  text-align: start;
+  margin: 3.5rem 0 1rem 0;
+}
+
 .primary-color {
   color: var(--primary-color) !important;
 }
 
 .secondary-color {
   color: var(--secondary-color) !important;
+}
+
+.secondary-border {
+  border: 1.5px solid var(--secondary-color);
+  border-radius: 0 !important;
 }
 
 .accent-color {
@@ -60,6 +70,15 @@ h1 {
 .nav-link.active {
   color: var(--secondary-color) !important;
   border-bottom: 2px solid var(--secondary-color) !important;
+}
+
+.admin-nav:hover {
+  color: white !important;
+}
+
+.admin-nav.active {
+  color: white !important;
+  border-bottom: 2px solid white !important;
 }
 
 .btn {

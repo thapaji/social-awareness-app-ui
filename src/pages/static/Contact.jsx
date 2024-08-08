@@ -1,41 +1,63 @@
 import React from "react";
 import { UserLayout } from "../../components/layouts/UserLayout";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { CustomInput } from "../../components/CustomInput";
 
 const Contact = () => {
-  const inputs = [
-    { label: "First Name", name: "fname", type: "text", placeholder: "Enter First Name" },
-    { label: "Last Name", name: "lname", type: "text", placeholder: "Enter Last Name" },
-    { label: "Email", name: "email", type: "email", placeholder: "Enter email" },
-    {
-      label: "Message",
-      name: "message",
-      type: "text",
-      as: "textarea",
-      rows: "10",
-      placeholder: "Type your message here",
-    },
-  ];
-
   const handleSubmit = (e) => {
     e.preventDefault();
   };
 
   return (
     <UserLayout>
-      <Container>
-        <h1>Contact Us</h1>
-        <hr />
-        <Form className="" onSubmit={handleSubmit}>
-          {inputs.map((item, i) => (
-            <CustomInput key={i} {...item} />
-          ))}
-          <div className="d-grid">
-            <Button type="submit">Send...</Button>
-          </div>
-        </Form>
-      </Container>
+      <div className="accent-bg p-4 full-height-content">
+        <Container style={{ width: "90vh" }}>
+          <h1>Contact Us</h1>
+          <Form onSubmit={handleSubmit}>
+            <Row className="mb-4">
+              <Col className="text-end fw-bold fs-5 secondary-color" sm={4}>
+                Name:
+              </Col>
+              <Col>
+                <input
+                  type="text"
+                  className="form-control secondary-border"
+                  placeholder="Enter your name"
+                />
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <Col className="text-end fw-bold fs-5 secondary-color" sm={4}>
+                Phone:
+              </Col>
+              <Col>
+                <input
+                  type="number"
+                  className="form-control secondary-border"
+                  placeholder="Enter your phone number"
+                />
+              </Col>
+            </Row>
+            <Row className="mb-4">
+              <Col className="text-end fw-bold fs-5 secondary-color" sm={4}>
+                Message:
+              </Col>
+              <Col>
+                <textarea
+                  className="form-control secondary-border"
+                  rows="5"
+                  placeholder="Enter your message"
+                />
+              </Col>
+            </Row>
+            <Row>
+              <Button type="submit" className="secondary-bg m-auto" style={{ width: "50%" }}>
+                Send Message
+              </Button>
+            </Row>
+          </Form>
+        </Container>
+      </div>
     </UserLayout>
   );
 };

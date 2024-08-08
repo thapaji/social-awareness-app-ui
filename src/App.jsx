@@ -13,6 +13,11 @@ import Dashboard from "./pages/admin/Dashboard";
 import NeedSupport from "./pages/admin/NeedSupport";
 import AwarnessList from "./pages/cause/AwarnessList";
 import Business from "./pages/business/Business";
+import Admins from "./pages/admin/Admins";
+import Settings from "./pages/admin/Settings";
+import AdminEvents from "./pages/events/AdminEvents";
+import AdminCauses from "./pages/cause/AdminCauses";
+import Users from "./pages/user/Users";
 
 const App = () => {
   return (
@@ -32,6 +37,11 @@ const App = () => {
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/need-support/awarness" element={<AwarnessList />} />
         <Route path="/need-support/business" element={<Business />} />
+        <Route path="/admin/users" element={<Users />} />
+        <Route path="/admin/causes" element={<AdminCauses />} />
+        <Route path="/admin/events" element={<AdminEvents />} />
+        <Route path="/admin/settings" element={<Settings />} />
+        <Route path="/admin/admins" element={<Admins />} />
       </Routes>
       <ToastContainer />
     </>
