@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { FaEdit, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 import { getCauses } from "./causeAction";
 import { deleteCause } from "./causeAxios";
 
@@ -22,10 +22,17 @@ const AdminCauses = () => {
   return (
     <AdminLayout>
       <div className="accent-bg p-4">
-        <h1 className="dash-heading">Causes</h1>
-        <Link to="/admin/causes/add">
-          <Button variant="primary">Add Cause</Button>
-        </Link>
+        <Row>
+          <Col>
+            <h1 className="dash-heading">Causes</h1>
+          </Col>
+          <Col className="text-end">
+            <Link to="/admin/causes/add">
+              <Button variant="primary"><FaPlus/></Button>
+            </Link>
+          </Col>
+        </Row>
+
         <hr />
         <Table striped bordered hover>
           <thead>

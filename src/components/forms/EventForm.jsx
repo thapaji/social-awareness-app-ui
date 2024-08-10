@@ -29,12 +29,20 @@ const EventForm = ({ eventToEdit, onCancel }) => {
   }, [eventToEdit, reset]);
 
   const onSubmit = (data) => {
+    console.log(data);
+    const formData = {
+      title: data.title,
+      description: data.description,
+      cause: { causeId: data.cause, causeTitle: data.causeTitle },
+      date: new Date(data.date).toISOString(),
+      location: data.location,
+    };
     if (eventToEdit) {
-      dispatch(updateEvent(eventToEdit._id, data));
+      dispatch(updateEvent(eventToEdit._id, formData));
     } else {
-      dispatch(addEvent(data));
+      dispatch(addEvent(formData));
     }
-    onCancel(); // Reset the form
+    onCancel();
   };
 
   return (

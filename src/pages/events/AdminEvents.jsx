@@ -1,10 +1,10 @@
-// src/pages/admin/AdminEvents.jsx
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
 import { fetchEvents, deleteEvent } from "./eventActions";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
+import { FaPlus } from "react-icons/fa";
 
 const AdminEvents = () => {
   const dispatch = useDispatch();
@@ -28,10 +28,19 @@ const AdminEvents = () => {
   return (
     <AdminLayout>
       <div className="accent-bg p-4">
-        <h1 className="dash-heading">Events</h1>
-        <Button variant="primary" onClick={() => navigate("/admin/events/add")}>
-          Add New Event
-        </Button>
+        <Row>
+          <Col>
+            <h1 className="dash-heading">Events</h1>
+          </Col>
+          <Col className="text-end">
+            <Link to="/admin/events/add">
+              <Button variant="primary">
+                <FaPlus />
+              </Button>
+            </Link>
+          </Col>
+        </Row>
+
         <Table striped bordered hover>
           <thead>
             <tr>
