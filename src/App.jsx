@@ -18,6 +18,8 @@ import Settings from "./pages/admin/Settings";
 import AdminEvents from "./pages/events/AdminEvents";
 import AdminCauses from "./pages/cause/AdminCauses";
 import Users from "./pages/user/Users";
+import AddEditCause from "./pages/cause/AddEditCause";
+import AddEditEvent from "./pages/events/AddEditEvent";
 
 const App = () => {
   return (
@@ -39,7 +41,11 @@ const App = () => {
         <Route path="/need-support/business" element={<Business />} />
         <Route path="/admin/users" element={<Users />} />
         <Route path="/admin/causes" element={<AdminCauses />} />
+        <Route path="/admin/causes/add" element={<AddEditCause />} />
+        <Route path="/admin/causes/edit/:id" element={<AddEditCause />} />
         <Route path="/admin/events" element={<AdminEvents />} />
+        <Route path="/admin/events/add" element={<AddEditEvent />} />
+        <Route path="/admin/events/add/:id" element={<AddEditEvent />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/admins" element={<Admins />} />
       </Routes>
