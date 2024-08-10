@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
-import { fetchUserInfo, loginUser, postNewUser } from "./userAxios";
-import { setUser } from "./userSlice";
+import { fetchUserInfo, fetchUsers, loginUser, postNewUser } from "./userAxios";
+import { setUser, setUsers } from "./userSlice";
 
 export const postUserObj = (user) => async (dispatch) => {
     const pending = postNewUser(user);
@@ -12,7 +12,7 @@ export const postUserObj = (user) => async (dispatch) => {
 
 
 export const loginAction = (user) => async (dispatch) => {
-    const pending =  loginUser(user);
+    const pending = loginUser(user);
     toast.promise(pending, { pending: 'Please Wait...' })
     const { status, message } = await pending;
     toast[status](message);
@@ -22,4 +22,9 @@ export const loginAction = (user) => async (dispatch) => {
 export const getUserObj = () => async (dispatch) => {
     const { status, user } = await fetchUserInfo();
     dispatch(setUser(user))
+}
+
+export const getUsers = () => async (dispatch) => {
+    const { status, data } = await fetchUsers();
+    if (status === 'success') dispatch(setUsers(data))
 }

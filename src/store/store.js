@@ -4,7 +4,7 @@ import userReducer from "../pages/user/userSlice";
 
 export default configureStore({
     reducer: {
-        userInfo: userReducer,
+        user: userReducer,
         // system: systemReducer,
     }
 })

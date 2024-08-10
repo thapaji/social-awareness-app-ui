@@ -19,3 +19,8 @@ export const fetchUserInfo = async () => {
     const axiosObj = { method: 'GET', url: userEp, isPrivate: true}
     return await apiProcessor(axiosObj);
 };
+
+export const fetchUsers = async () => {
+    const axiosObj = { method: 'GET', url: userEp, isPrivate: true}
+    return await apiProcessor(axiosObj);
+};
