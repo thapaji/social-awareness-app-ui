@@ -7,34 +7,6 @@ import { getUsers } from "./userAction";
 const Users = () => {
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.user);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        await dispatch(getUsers());
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchUsers();
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <AdminLayout>
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "100vh" }}
-        >
-          <Spinner animation="border" />
-        </div>
-      </AdminLayout>
-    );
-  }
 
   return (
     <AdminLayout>

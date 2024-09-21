@@ -1,8 +1,8 @@
 import React from "react";
 import { Header } from "./Header";
-import { Nav, Stack, Col, Row } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
-import { FaUsers, FaHeart, FaCalendarAlt, FaCogs, FaUserShield } from "react-icons/fa";
+import { Stack, Col, Row } from "react-bootstrap";
+import { FaUsers, FaHeart, FaCalendarAlt, FaCogs, FaUserShield, FaBullhorn } from "react-icons/fa";
 
 export const AdminLayout = ({ children }) => {
   return (
@@ -24,12 +24,17 @@ export const AdminLayout = ({ children }) => {
               <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/events">
                 <FaCalendarAlt className="me-2" /> Events
               </NavLink>
-              <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/settings">
+
+              <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/advertisements">
+                <FaBullhorn className="me-2" /> Adverts
+              </NavLink>
+
+              {/* <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/settings">
                 <FaCogs className="me-2" /> Settings
               </NavLink>
               <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/admins">
                 <FaUserShield className="me-2" /> Admins
-              </NavLink>
+              </NavLink> */}
             </Stack>
           </Col>
           <Col>

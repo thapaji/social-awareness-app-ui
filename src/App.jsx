@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 // import { useDispatch } from "react-redux";
@@ -23,14 +23,44 @@ import AddEditEvent from "./pages/events/AddEditEvent";
 import { getCauses } from "./pages/cause/causeAction";
 import { useDispatch } from "react-redux";
 import { fetchEvents } from "./pages/events/eventActions";
+import Advertisements from "./pages/admin/Advertisements";
+import { getUsers } from "./pages/user/userAction";
+import { Spinner } from "react-bootstrap";
 
 const App = () => {
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        await dispatch(getUsers());
+      } catch (error) {
+        console.error("Error fetching users:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
     dispatch(getCauses());
     dispatch(fetchEvents());
   }, [dispatch]);
+
+  if (loading) {
+    return (
+      <>
+        <h1>Setting up your environment....</h1>
+        <h1>Please Wait while we get your system ready....</h1>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "100vh" }}
+        >
+          <Spinner animation="border" />
+        </div>
+      </>
+    );
+  }
   return (
     <>
       <Routes>
@@ -57,6 +87,7 @@ const App = () => {
         <Route path="/admin/events/edit/:id" element={<AddEditEvent />} />
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/admins" element={<Admins />} />
+        <Route path="/admin/advertisements" element={<Advertisements />} />
       </Routes>
       <ToastContainer />
     </>
