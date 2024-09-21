@@ -30,7 +30,7 @@ export const createAdvertisement = (advertisement) => async (dispatch) => {
     }
 };
 
-export const modifyAdvertisement = (id, advertisement) => async (dispatch) => {
+export const updateAdvertisement = (id, advertisement) => async (dispatch) => {
     try {
         const { status } = await updateAdvertisementAPI(id, advertisement);
         if (status === 'success') {
@@ -48,7 +48,7 @@ export const deleteAdvertisement = (id) => async (dispatch) => {
     try {
         const { status } = await deleteAdvertisementAPI(id);
         if (status === 'success') {
-            dispatch(getAdvertisements()); 
+            dispatch(getAdvertisements());
             toast.success('Advertisement deleted successfully');
         } else {
             toast.error('Failed to delete advertisement');

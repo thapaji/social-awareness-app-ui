@@ -26,6 +26,8 @@ import { fetchEvents } from "./pages/events/eventActions";
 import Advertisements from "./pages/admin/Advertisements";
 import { getUsers } from "./pages/user/userAction";
 import { Spinner } from "react-bootstrap";
+import AddEditAdvertisement from "./pages/business/AddEditAdvertisement";
+import { getAdvertisements } from "./pages/business/businessAction";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -45,6 +47,7 @@ const App = () => {
     fetchUsers();
     dispatch(getCauses());
     dispatch(fetchEvents());
+    dispatch(getAdvertisements());
   }, [dispatch]);
 
   if (loading) {
@@ -88,6 +91,8 @@ const App = () => {
         <Route path="/admin/settings" element={<Settings />} />
         <Route path="/admin/admins" element={<Admins />} />
         <Route path="/admin/advertisements" element={<Advertisements />} />
+        <Route path="/admin/advertisements/add" element={<AddEditAdvertisement />} />
+        <Route path="/admin/advertisements/edit/:id" element={<AddEditAdvertisement />} />
       </Routes>
       <ToastContainer />
     </>

@@ -38,12 +38,12 @@ const EventForm = ({ eventToEdit, onCancel }) => {
   }, [eventToEdit, reset, causes]);
 
   const onSubmit = (data) => {
-    const selectedCause = causes.find((cause) => cause._id === data.cause); // Get the selected cause details
+    const selectedCause = causes.find((cause) => cause._id === data.cause); 
 
     const formData = {
       title: data.title,
       description: data.description,
-      cause: { causeId: selectedCause._id, causeTitle: selectedCause.title }, // Set both causeId and causeTitle
+      cause: { causeId: selectedCause._id, causeTitle: selectedCause.title }, 
       date: new Date(data.date).toISOString(),
       location: data.location,
       image: data.image, 

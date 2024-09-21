@@ -1,19 +1,26 @@
 import React from "react";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
-import { Button, Col, Row, Table } from "react-bootstrap";
+import { Button, Card, Col, Row, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaToggleOn, FaToggleOff, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
+import { deleteAdvertisement, updateAdvertisement } from "../business/businessAction";
 
 const Advertisements = () => {
   const dispatch = useDispatch();
   const advertisements = useSelector((state) => state.business.advertisements);
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this event?")) {
-      dispatch(deleteEvent(id));
+    if (window.confirm("Are you sure you want to delete this advertisement?")) {
+      dispatch(deleteAdvertisement(id));
     }
   };
+
+  const toggleStatus = ({ status, ...rest }) => {
+    const newStatus = status === "active" ? "inactive" : "active";
+    dispatch(updateAdvertisement(rest._id, { status: newStatus, ...rest }));
+  };
+
   return (
     <AdminLayout>
       <div className="accent-bg p-4">
@@ -37,7 +44,7 @@ const Advertisements = () => {
               <th>Title</th>
               <th>Business</th>
               <th>Description</th>
-              <th>Created By</th>
+              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -56,7 +63,15 @@ const Advertisements = () => {
                 </td>
                 <td>{ad.business}</td>
                 <td>{ad.description}</td>
-                <td>{ad.createdBy}</td>
+                <td>
+                  <Button
+                    variant={ad.status === "active" ? "success" : "danger"}
+                    onClick={() => toggleStatus(ad)}
+                  >
+                    {ad.status === "active" ? <FaToggleOn /> : <FaToggleOff />}
+                    {ad.status === "active" ? " Active" : " Inactive"}
+                  </Button>
+                </td>
                 <td>
                   <Link to={`/admin/advertisements/edit/${ad._id}`}>
                     <Button variant="warning">

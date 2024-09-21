@@ -9,7 +9,7 @@ const businessSlice = createSlice({
     },
     reducers: {
         setAdvertisements(state, action) {
-            state.causes = action.payload;
+            state.advertisements = action.payload;
         },
     },
 });

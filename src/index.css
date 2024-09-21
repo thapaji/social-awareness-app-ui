@@ -172,25 +172,27 @@ h5 {
 }
 
 .pink-circle {
-  background-color: var(--secondary-color); /* Use secondary color for the pink circle */
+  background-color: var(--secondary-color);
 }
 
 .blue-circle {
-  background-color: var(--primary-color); /* Use primary color for the blue circle */
+  background-color: var(--primary-color);
 }
 
 .white-circle {
-  background-color: white; /* White background for the white circle */
-  color: var(--primary-color); /* Primary color for the icon inside the white circle */
-  border: 2px solid var(--accent-color); /* Accent color border for the white circle */
+  background-color: white;
+  color: var(--primary-color);
+}
+.accent-circle {
+  border: 2px solid white;
 }
 
 .stat-label {
   margin-top: 10px;
   font-size: 1.1em;
-  color: var(--primary-color); 
+  color: var(--primary-color);
 }
 
 .col-circle:hover {
-  transform: scale(2); 
+  transform: scale(2);
 }
