@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Button, Row, Col } from "react-bootstrap";
+import { Table, Button, Row, Col, Card } from "react-bootstrap";
 import { fetchEvents, deleteEvent } from "./eventActions";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
@@ -10,10 +10,6 @@ const AdminEvents = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const events = useSelector((state) => state.events.events);
-
-  // useEffect(() => {
-  //   dispatch(fetchEvents());
-  // }, [dispatch]);
 
   const handleEdit = (id) => {
     navigate(`/admin/events/edit/${id}`);
@@ -40,7 +36,7 @@ const AdminEvents = () => {
             </Link>
           </Col>
         </Row>
-
+        <hr />
         <Table striped bordered hover>
           <thead>
             <tr>
@@ -55,7 +51,17 @@ const AdminEvents = () => {
           <tbody>
             {events.map((event) => (
               <tr key={event._id}>
-                <td>{event.title}</td>
+                <td>
+                  {" "}
+                  <Card>
+                    <Card.Body>
+                      <Card.Title>
+                        {event.title.length > 10 ? event.title.slice(0, 15) + "..." : event.title}
+                      </Card.Title>
+                    </Card.Body>
+                    <Card.Img variant="bottom" src={event.image} />
+                  </Card>
+                </td>
                 <td>{event.description}</td>
                 <td>{event.cause.causeTitle}</td>
                 <td>{new Date(event.date).toLocaleDateString()}</td>
