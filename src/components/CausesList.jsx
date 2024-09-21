@@ -1,19 +1,27 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { CommonCards } from "./CommonCards";
-import ed from "../assets/Ed.png";
-import giv from "../assets/giv.png";
-import kid from "../assets/kid.png";
 
 export const CausesList = () => {
-  const text = `Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ea sit voluptatum molestias 
-                praesentium! Nisi maiores adipisci esse eius molestias aspernatur?`;
+  const causes = useSelector((state) => state.causes.causes); 
+
   return (
     <>
       <h2 className="mt-4">Causes Near You</h2>
       <hr className="mb-4" />
-      <CommonCards image={ed} title="City2Surf" text={text} />
-      <CommonCards image={giv} title="City2Surf" text={text} />
-      <CommonCards image={kid} title="City2Surf" text={text} />
+
+      {causes && causes.length > 0 ? (
+        causes.map((cause) => (
+          <CommonCards
+            key={cause._id} 
+            image={cause.image || "defaultImageUrl.png"} 
+            title={cause.title}
+            text={cause.description}
+          />
+        ))
+      ) : (
+        <p>No causes found.</p> 
+      )}
     </>
   );
 };

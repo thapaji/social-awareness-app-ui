@@ -10,9 +10,9 @@ const AdminCauses = () => {
   const dispatch = useDispatch();
   const causes = useSelector((state) => state.causes.causes);
 
-  useEffect(() => {
-    dispatch(getCauses());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(getCauses());
+  // }, [dispatch]);
 
   const handleDelete = (id) => {
     dispatch(removeCause(id));

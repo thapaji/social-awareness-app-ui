@@ -20,8 +20,17 @@ import AdminCauses from "./pages/cause/AdminCauses";
 import Users from "./pages/user/Users";
 import AddEditCause from "./pages/cause/AddEditCause";
 import AddEditEvent from "./pages/events/AddEditEvent";
+import { getCauses } from "./pages/cause/causeAction";
+import { useDispatch } from "react-redux";
+import { fetchEvents } from "./pages/events/eventActions";
 
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCauses());
+    dispatch(fetchEvents());
+  }, [dispatch]);
   return (
     <>
       <Routes>

@@ -11,9 +11,9 @@ const AdminEvents = () => {
   const navigate = useNavigate();
   const events = useSelector((state) => state.events.events);
 
-  useEffect(() => {
-    dispatch(fetchEvents());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchEvents());
+  // }, [dispatch]);
 
   const handleEdit = (id) => {
     navigate(`/admin/events/edit/${id}`);
