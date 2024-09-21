@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { addCause, updateCause } from "../../pages/cause/causeAxios";
+import { createCause, modifyCause } from "../../pages/cause/causeAction";
 
 const CauseForm = ({ causeToEdit, onCancel }) => {
   const dispatch = useDispatch();
@@ -20,6 +20,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         description: causeToEdit.description,
         category: causeToEdit.category,
         createdBy: causeToEdit.createdBy,
+        image: causeToEdit.image,
       });
     } else {
       reset();
@@ -28,11 +29,11 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
 
   const onSubmit = (data) => {
     if (causeToEdit) {
-      dispatch(updateCause(causeToEdit._id, data));
+      dispatch(modifyCause(causeToEdit._id, data));
     } else {
-      dispatch(addCause(data));
+      dispatch(createCause(data));
     }
-    onCancel(); 
+    onCancel();
   };
 
   return (
@@ -47,6 +48,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         />
         <Form.Control.Feedback type="invalid">{errors.title?.message}</Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group controlId="formDescription">
         <Form.Label>Description</Form.Label>
         <Form.Control
@@ -58,6 +60,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         />
         <Form.Control.Feedback type="invalid">{errors.description?.message}</Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group controlId="formCategory">
         <Form.Label>Category</Form.Label>
         <Form.Control
@@ -73,6 +76,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         </Form.Control>
         <Form.Control.Feedback type="invalid">{errors.category?.message}</Form.Control.Feedback>
       </Form.Group>
+
       <Form.Group controlId="formCreatedBy">
         <Form.Label>Created By</Form.Label>
         <Form.Control
@@ -83,6 +87,12 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         />
         <Form.Control.Feedback type="invalid">{errors.createdBy?.message}</Form.Control.Feedback>
       </Form.Group>
+
+      <Form.Group controlId="formImage">
+        <Form.Label>Image URL</Form.Label>
+        <Form.Control type="text" placeholder="Enter image URL" {...register("image")} />
+      </Form.Group>
+
       <Button variant="primary" type="submit">
         {causeToEdit ? "Update Cause" : "Add Cause"}
       </Button>

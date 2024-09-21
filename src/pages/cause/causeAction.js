@@ -22,9 +22,9 @@ export const getCauses = () => async (dispatch) => {
 
 export const createCause = (cause) => async (dispatch) => {
     try {
-        const { status, data } = await addCauseAPI(cause);
+        const { status } = await addCauseAPI(cause);
         if (status === 'success') {
-            dispatch(getCauses()); // Refresh the list
+            dispatch(getCauses()); 
             toast.success('Cause created successfully');
         } else {
             toast.error('Failed to create cause');
@@ -36,9 +36,9 @@ export const createCause = (cause) => async (dispatch) => {
 
 export const modifyCause = (id, cause) => async (dispatch) => {
     try {
-        const { status, data } = await updateCauseAPI(id, cause);
+        const { status } = await updateCauseAPI(id, cause);
         if (status === 'success') {
-            dispatch(getCauses()); // Refresh the list
+            dispatch(getCauses());
             toast.success('Cause updated successfully');
         } else {
             toast.error('Failed to update cause');

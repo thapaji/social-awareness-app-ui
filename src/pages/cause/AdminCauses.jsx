@@ -4,8 +4,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
-import { getCauses } from "./causeAction";
-import { deleteCause } from "./causeAxios";
+import { getCauses, removeCause } from "./causeAction";
 
 const AdminCauses = () => {
   const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const AdminCauses = () => {
   }, [dispatch]);
 
   const handleDelete = (id) => {
-    dispatch(deleteCause(id));
+    dispatch(removeCause(id));
   };
 
   return (

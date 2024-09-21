@@ -4,7 +4,7 @@ import { Table, Button, Row, Col } from "react-bootstrap";
 import { fetchEvents, deleteEvent } from "./eventActions";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
-import { FaPlus } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
 
 const AdminEvents = () => {
   const dispatch = useDispatch();
@@ -61,11 +61,13 @@ const AdminEvents = () => {
                 <td>{new Date(event.date).toLocaleDateString()}</td>
                 <td>{event.location}</td>
                 <td>
-                  <Button variant="warning" onClick={() => handleEdit(event._id)}>
-                    Edit
-                  </Button>
-                  <Button variant="danger" onClick={() => handleDelete(event._id)} className="ms-2">
-                    Delete
+                  <Link to={`/admin/events/edit/${event._id}`}>
+                    <Button variant="warning">
+                      <FaEdit />
+                    </Button>
+                  </Link>
+                  <Button variant="danger" onClick={() => handleDelete(event._id)}>
+                    <FaTrash />
                   </Button>
                 </td>
               </tr>
