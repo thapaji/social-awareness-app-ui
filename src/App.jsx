@@ -7,7 +7,6 @@ import Login from "./pages/user/Login";
 import ForgetPassword from "./pages/user/ForgetPassword";
 import Register from "./pages/user/Register";
 import About from "./pages/static/About";
-import Contact from "./pages/static/Contact";
 import Dashboard from "./pages/admin/Dashboard";
 import NeedSupport from "./pages/admin/NeedSupport";
 import AwarnessList from "./pages/cause/AwarnessList";
@@ -30,6 +29,9 @@ import { getAdvertisements } from "./pages/business/businessAction";
 import EventList from "./pages/events/EventList";
 import CausePage from "./pages/cause/CausePage";
 import EventPage from "./pages/events/EventPage";
+import Contact from "./pages/contact/Contact";
+import AdminContact from "./pages/contact/AdminContact";
+import { getMessages } from "./pages/contact/contactAction";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const App = () => {
     dispatch(getCauses());
     dispatch(fetchEvents());
     dispatch(getAdvertisements());
+    dispatch(getMessages());
   }, [dispatch]);
 
   if (loading) {
@@ -98,6 +101,7 @@ const App = () => {
         <Route path="/admin/advertisements" element={<Advertisements />} />
         <Route path="/admin/advertisements/add" element={<AddEditAdvertisement />} />
         <Route path="/admin/advertisements/edit/:id" element={<AddEditAdvertisement />} />
+        <Route path="/admin/messages" element={<AdminContact />} />
       </Routes>
       <ToastContainer />
     </>

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { useForm } from "react-hook-form";
 import { modifyCause } from "./causeAction";
+import { toast } from "react-toastify";
 
 const CausePage = () => {
   const { id } = useParams();
@@ -22,12 +23,18 @@ const CausePage = () => {
   } = useForm();
 
   const onParticipate = () => {
+    if (!user) {
+      return toast.warn("User must be logged in");
+    }
     const { participants, ...rest } = selectedCause;
     const causeToEdit = { ...rest, participants: [...participants, { username: user.fullName }] };
     dispatch(modifyCause(selectedCause._id, causeToEdit));
   };
 
   const onComment = (data) => {
+    if (!user) {
+      return toast.warn("User must be logged in");
+    }
     const { comments, ...rest } = selectedCause;
     const causeToEdit = {
       ...rest,

@@ -17,7 +17,8 @@ const NeedSupport = () => {
           <Row>
             <Col className="align-right">
               <Card className="clickable-card accent-bg">
-                <Link to="/need-support/business">
+                {/* <Link to="/need-support/business"> */}
+                <Link to="/contact">
                   <div className="d-flex justify-content-center">
                     <Card.Img variant="top" src={business} style={{ width: "50%" }} />
                   </div>

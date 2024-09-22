@@ -2,7 +2,15 @@ import React from "react";
 import { Header } from "./Header";
 import { NavLink } from "react-router-dom";
 import { Stack, Col, Row } from "react-bootstrap";
-import { FaUsers, FaHeart, FaCalendarAlt, FaCogs, FaUserShield, FaBullhorn } from "react-icons/fa";
+import {
+  FaUsers,
+  FaHeart,
+  FaCalendarAlt,
+  FaCogs,
+  FaUserShield,
+  FaBullhorn,
+  FaEnvelope,
+} from "react-icons/fa";
 
 export const AdminLayout = ({ children }) => {
   return (
@@ -27,6 +35,10 @@ export const AdminLayout = ({ children }) => {
 
               <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/advertisements">
                 <FaBullhorn className="me-2" /> Adverts
+              </NavLink>
+
+              <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/messages">
+                <FaEnvelope className="me-2" /> Messages
               </NavLink>
 
               {/* <NavLink className="ms-4 p-4 nav-link admin-nav" to="/admin/settings">

@@ -6,6 +6,7 @@ import { updateEvent } from "./eventActions";
 import { UserLayout } from "../../components/layouts/UserLayout";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const EventPage = () => {
   const { id } = useParams();
@@ -22,12 +23,18 @@ const EventPage = () => {
   } = useForm();
 
   const onParticipate = () => {
+    if (!user) {
+      return toast.warn("User must be logged in");
+    }
     const { participants, ...rest } = selectedEvent;
     const eventToEdit = { ...rest, participants: [...participants, { username: user.fullName }] };
     dispatch(updateEvent(selectedEvent._id, eventToEdit));
   };
 
   const onComment = (data) => {
+    if (!user) {
+      return toast.warn("User must be logged in");
+    }
     const { comments, ...rest } = selectedEvent;
     const eventToEdit = {
       ...rest,
@@ -46,6 +53,11 @@ const EventPage = () => {
             <img src={selectedEvent.image} alt={selectedEvent.title} className="event-image" />
           </Row>
           <Row>
+            <h2 className="mb-4">Supporting: {selectedEvent.cause.causeTitle}</h2>
+            <Row className="mb-4">
+              <Col>Date: {selectedEvent.date.slice(0, 10)}</Col>
+              <Col>Location: {selectedEvent.location}</Col>
+            </Row>
             <p>{selectedEvent.description}</p>
           </Row>
 
