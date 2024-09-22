@@ -4,6 +4,7 @@ import { CommonCards } from "./CommonCards";
 
 export const EventsList = () => {
   const events = useSelector((state) => state.events.events);
+  const navigate = "/need-support/events";
 
   return (
     <>
@@ -17,6 +18,7 @@ export const EventsList = () => {
             image={event.image || "defaultEventImage.png"}
             title={event.title}
             text={event.description}
+            navigate={navigate}
           />
         ))
       ) : (

@@ -3,7 +3,8 @@ import { useSelector } from "react-redux";
 import { CommonCards } from "./CommonCards";
 
 export const CausesList = () => {
-  const causes = useSelector((state) => state.causes.causes); 
+  const causes = useSelector((state) => state.causes.causes);
+  const navigate = "/need-support/awarness";
 
   return (
     <>
@@ -13,14 +14,15 @@ export const CausesList = () => {
       {causes && causes.length > 0 ? (
         causes.map((cause) => (
           <CommonCards
-            key={cause._id} 
-            image={cause.image || "defaultImageUrl.png"} 
+            key={cause._id}
+            image={cause.image || "defaultImageUrl.png"}
             title={cause.title}
             text={cause.description}
+            navigate={navigate}
           />
         ))
       ) : (
-        <p>No causes found.</p> 
+        <p>No causes found.</p>
       )}
     </>
   );

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-// import { useDispatch } from "react-redux";
 import Home from "./pages/Home";
 import UserVerification from "./pages/UserVerification";
 import Login from "./pages/user/Login";
@@ -28,6 +27,9 @@ import { getUsers } from "./pages/user/userAction";
 import { Spinner } from "react-bootstrap";
 import AddEditAdvertisement from "./pages/business/AddEditAdvertisement";
 import { getAdvertisements } from "./pages/business/businessAction";
+import EventList from "./pages/events/EventList";
+import CausePage from "./pages/cause/CausePage";
+import EventPage from "./pages/events/EventPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -76,6 +78,9 @@ const App = () => {
         <Route path="/need-support" element={<NeedSupport />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/user/new" element={<Register />} />
+        <Route path="/need-support/events" element={<EventList />} />
+        <Route path="/need-support/awarness/:id" element={<CausePage />} />
+        <Route path="/need-support/events/:id" element={<EventPage />} />
         /************** Private Routes ****************/
         <Route path="*" element={<h1>404 Page Not Found</h1>} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
