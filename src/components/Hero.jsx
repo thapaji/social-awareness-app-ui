@@ -13,7 +13,7 @@ const Hero = () => {
   };
 
   return (
-    <Carousel activeIndex={index} onSelect={handleSelect} className="h-50">
+    <Carousel activeIndex={index} onSelect={handleSelect}>
       {/* <div className="darken-img"></div> */}
       <Carousel.Item>
         <img className="d-block w-100" src={img1} alt="First slide" />

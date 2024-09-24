@@ -48,7 +48,7 @@ h1 {
 }
 
 .navbar {
-  height: 20vh;
+  min-height: 20vh;
 }
 
 .full-height-content {
