@@ -24,12 +24,12 @@ export const addEvent = (event) => async (dispatch) => {
     }
 };
 
-export const updateEvent = (id, event) => async (dispatch) => {
+export const updateEvent = (id, event, showToast=true) => async (dispatch) => {
     try {
         const { status, message } = await updateEventAPI(id, event);
         if (status === 'success') {
             dispatch(fetchEvents());
-            toast.success(message);
+            showToast && toast.success(message);
         }
     } catch (error) {
         toast.error("Failed to update event");

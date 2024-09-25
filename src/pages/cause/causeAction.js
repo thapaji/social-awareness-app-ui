@@ -34,14 +34,14 @@ export const createCause = (cause) => async (dispatch) => {
     }
 };
 
-export const modifyCause = (id, cause) => async (dispatch) => {
+export const modifyCause = (id, cause, showToast=true) => async (dispatch) => {
     try {
         const { status } = await updateCauseAPI(id, cause);
         if (status === 'success') {
             dispatch(getCauses());
-            toast.success('Cause updated successfully');
+            showToast && toast.success('Cause updated successfully');
         } else {
-            toast.error('Failed to update cause');
+            showToast && toast.error('Failed to update cause');
         }
     } catch (error) {
         toast.error('An error occurred while updating cause');

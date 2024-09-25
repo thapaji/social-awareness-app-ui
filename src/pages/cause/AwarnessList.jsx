@@ -13,7 +13,7 @@ const AwarnessList = () => {
           <h1>Social Awarness Campaigns</h1>
           <Row>
             {causes.map((cause) => (
-              <Col>
+              <Col key={cause._id}>
                 <Link to={`/need-support/awarness/${cause._id}`}>
                   <Card className="clickable-card accent-bg">
                     <div className="d-flex justify-content-center">

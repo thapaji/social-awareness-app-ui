@@ -14,7 +14,7 @@ const EventList = () => {
           <h1>Social Awarness Campaigns</h1>
           <Row>
             {events.map((event) => (
-              <Col>
+              <Col key={event._id}>
                 <Link to={`/need-support/events/${event._id}`}>
                   <Card className="clickable-card accent-bg">
                     <div className="d-flex justify-content-center">

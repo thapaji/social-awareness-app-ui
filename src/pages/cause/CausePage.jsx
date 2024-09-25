@@ -24,11 +24,38 @@ const CausePage = () => {
 
   const onParticipate = () => {
     if (!user) {
-      return toast.warn("User must be logged in");
+      return toast.warn("Login to participate in the cause.");
     }
-    const { participants, ...rest } = selectedCause;
-    const causeToEdit = { ...rest, participants: [...participants, { username: user.fullName }] };
-    dispatch(modifyCause(selectedCause._id, causeToEdit));
+
+    const isUserParticipant = selectedCause.participants.some(
+      (participant) => participant.userId === user.id
+    );
+
+    let updatedParticipants;
+
+    if (isUserParticipant) {
+      updatedParticipants = selectedCause.participants.filter(
+        (participant) => participant.userId !== user.id
+      );
+    } else {
+      updatedParticipants = [
+        ...selectedCause.participants,
+        { userId: user.id, username: user.fullName, image: user.imageUrl },
+      ];
+    }
+
+    const causeToEdit = {
+      ...selectedCause,
+      participants: updatedParticipants,
+    };
+
+    dispatch(modifyCause(selectedCause._id, causeToEdit, false));
+
+    const message = isUserParticipant
+      ? "You have opted out of the cause."
+      : "You are now participating in the cause.";
+
+    toast.success(message);
   };
 
   const onComment = (data) => {
@@ -38,9 +65,12 @@ const CausePage = () => {
     const { comments, ...rest } = selectedCause;
     const causeToEdit = {
       ...rest,
-      comments: [...comments, { username: user.fullName, comment: data.comment }],
+      comments: [
+        ...comments,
+        { username: user.fullName, comment: data.comment, image: user.imageUrl },
+      ],
     };
-    dispatch(modifyCause(selectedCause._id, causeToEdit));
+    dispatch(modifyCause(selectedCause._id, causeToEdit, false));
     reset();
   };
 
@@ -62,9 +92,18 @@ const CausePage = () => {
               {selectedCause.participants.length > 0 ? (
                 selectedCause.participants.map((participant) => (
                   <Col key={participant.userId} xs={3} className="text-center">
-                    <div className="participant-circle">
-                      {participant.username.charAt(0).toUpperCase()}
-                    </div>
+                    {participant.image ? (
+                      <img
+                        src={participant.image}
+                        alt={participant.username}
+                        className="participant-image"
+                        style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                      />
+                    ) : (
+                      <div className="participant-circle">
+                        {participant.username.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                     <div className="participant-name">{participant.username}</div>
                   </Col>
                 ))
@@ -73,7 +112,11 @@ const CausePage = () => {
               )}
             </Row>
             <Row>
-              <Button onClick={onParticipate}>Participate</Button>
+              <Button onClick={onParticipate}>
+                {selectedCause.participants.some((participant) => participant.userId === user.id)
+                  ? "Opt Out of Cause"
+                  : "Click Here to Participate"}
+              </Button>
             </Row>
           </Row>
 
@@ -82,8 +125,38 @@ const CausePage = () => {
             <Row>
               {selectedCause.comments.length > 0 ? (
                 selectedCause.comments.map((comment, index) => (
-                  <Col key={index} xs={12} className="mb-3">
-                    <strong>{comment.username}:</strong> {comment.comment}
+                  <Col key={index} xs={12} className="mb-3 d-flex align-items-center">
+                    {comment.image ? (
+                      <img
+                        src={comment.image}
+                        alt={comment.username}
+                        className="comment-image"
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
+                          marginRight: "10px",
+                        }}
+                      />
+                    ) : (
+                      <div
+                        className="comment-circle"
+                        style={{
+                          width: "40px",
+                          height: "40px",
+                          borderRadius: "50%",
+                          backgroundColor: "#ddd",
+                          textAlign: "center",
+                          lineHeight: "40px",
+                          marginRight: "10px",
+                        }}
+                      >
+                        {comment.username.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div>
+                      <strong>{comment.username}:</strong> {comment.comment}
+                    </div>
                   </Col>
                 ))
               ) : (
