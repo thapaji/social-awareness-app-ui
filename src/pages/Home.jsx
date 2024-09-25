@@ -3,21 +3,22 @@ import { UserLayout } from "../components/layouts/UserLayout";
 import { Col, Container, Row } from "react-bootstrap";
 import { EventsList } from "../components/EventsList";
 import Hero from "../components/Hero";
-import { useAuth, useUser } from "@clerk/clerk-react";
 import { CausesList } from "../components/CausesList";
-import { Advertisements } from "../components/Advertisements";
+import { Advertisements } from "./business/Advertisements";
 
 const Home = () => {
   return (
     <UserLayout>
-      <Hero />
-      <Container>
+      <Container className="p-4">
+        <Hero />
         <Row>
-          <Col md={8}>
+          <Col md={5}>
             <CausesList />
+          </Col>
+          <Col md={5}>
             <EventsList />
           </Col>
-          <Col md={4}>
+          <Col md={2}>
             <Advertisements />
           </Col>
         </Row>

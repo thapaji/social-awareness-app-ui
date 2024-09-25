@@ -32,6 +32,8 @@ import EventPage from "./pages/events/EventPage";
 import Contact from "./pages/contact/Contact";
 import AdminContact from "./pages/contact/AdminContact";
 import { getMessages } from "./pages/contact/contactAction";
+import { UserLayout } from "./components/layouts/UserLayout";
+import AdvertisementPage from "./pages/business/AdvertisementPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -84,8 +86,8 @@ const App = () => {
         <Route path="/need-support/events" element={<EventList />} />
         <Route path="/need-support/awarness/:id" element={<CausePage />} />
         <Route path="/need-support/events/:id" element={<EventPage />} />
+        <Route path="/advertisements/:id" element={<AdvertisementPage />} />
         /************** Private Routes ****************/
-        <Route path="*" element={<h1>404 Page Not Found</h1>} />
         <Route path="/admin/dashboard" element={<Dashboard />} />
         <Route path="/need-support/awarness" element={<AwarnessList />} />
         <Route path="/need-support/business" element={<Business />} />
@@ -102,6 +104,14 @@ const App = () => {
         <Route path="/admin/advertisements/add" element={<AddEditAdvertisement />} />
         <Route path="/admin/advertisements/edit/:id" element={<AddEditAdvertisement />} />
         <Route path="/admin/messages" element={<AdminContact />} />
+        <Route
+          path="*"
+          element={
+            <UserLayout>
+              <h1>404 Page Not Found</h1>
+            </UserLayout>
+          }
+        />
       </Routes>
       <ToastContainer />
     </>

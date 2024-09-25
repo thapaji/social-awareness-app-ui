@@ -1,20 +1,15 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
-import run from "../assets/run.jpg";
-import { Link } from "react-router-dom";
 
-export const CommonCards = ({ image, title, text, navigate }) => {
+export const CommonCards = ({ image, title, subtitle, text }) => {
   return (
     <Card className="mb-4">
       <Card.Img variant="top" src={image} />
       <Card.Body>
         <Card.Title>{title}</Card.Title>
-        <Card.Text>{text}</Card.Text>
-        {navigate && (
-          <Link to={navigate}>
-            <Button variant="primary">See All...</Button>
-          </Link>
-        )}
+        <Card.Text>By: {subtitle ? subtitle : "Anonymous"}</Card.Text>
+        <Card.Text>{text.length > 100 ? text.slice(0, 100) + "..." : text}</Card.Text>
+        <Button variant="primary">Learn More...</Button>
       </Card.Body>
     </Card>
   );

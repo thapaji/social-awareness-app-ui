@@ -1,10 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { CommonCards } from "./CommonCards";
+import { Link } from "react-router-dom";
 
 export const EventsList = () => {
   const events = useSelector((state) => state.events.events);
-  const navigate = "/need-support/events";
+  const navigate = "/need-support/events/";
 
   return (
     <>
@@ -13,13 +14,17 @@ export const EventsList = () => {
 
       {events && events.length > 0 ? (
         events.map((event) => (
-          <CommonCards
-            key={event._id}
-            image={event.image || "defaultEventImage.png"}
-            title={event.title}
-            text={event.description}
-            navigate={navigate}
-          />
+          <Link to={navigate + event._id}>
+            {" "}
+            <CommonCards
+              key={event._id}
+              image={event.image || "defaultEventImage.png"}
+              title={event.title}
+              subtitle={event.createdBy}
+              text={event.description}
+              navigate={navigate}
+            />
+          </Link>
         ))
       ) : (
         <p>No events found.</p>
