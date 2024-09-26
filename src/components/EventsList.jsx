@@ -14,10 +14,9 @@ export const EventsList = () => {
 
       {events && events.length > 0 ? (
         events.map((event) => (
-          <Link to={navigate + event._id}>
+          <Link to={navigate + event._id}  key={event._id}>
             {" "}
             <CommonCards
-              key={event._id}
               image={event.image || "defaultEventImage.png"}
               title={event.title}
               subtitle={event.createdBy}

@@ -14,10 +14,9 @@ export const Advertisements = () => {
       <hr className="mb-4" />
       {activeAdvertisements && activeAdvertisements.length > 0 ? (
         activeAdvertisements.map((advertisement) => (
-          <Link to={navigate + advertisement._id}>
+          <Link to={navigate + advertisement._id} key={advertisement._id}>
             {" "}
             <CommonCards
-              key={advertisement._id}
               image={advertisement.image || "defaultImageUrl.png"}
               title={advertisement.title}
               subtitle={advertisement.business}

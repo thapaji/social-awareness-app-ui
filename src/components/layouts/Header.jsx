@@ -20,7 +20,7 @@ export const Header = () => {
             {userRole?.includes("admin") && (
               <>
                 <NavLink className="nav-link" to="/admin/dashboard">
-                  Dashboard
+                  Admin
                 </NavLink>
               </>
             )}

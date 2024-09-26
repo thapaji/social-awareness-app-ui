@@ -13,9 +13,8 @@ export const CausesList = () => {
       <hr className="mb-4" />
       {causes && causes.length > 0 ? (
         causes.map((cause) => (
-          <Link to={navigate + cause._id}>
+          <Link to={navigate + cause._id} key={cause._id}>
             <CommonCards
-              key={cause._id}
               image={cause.image || "defaultImageUrl.png"}
               title={cause.title}
               subtitle={cause.createdBy}

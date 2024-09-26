@@ -113,7 +113,7 @@ const AdvertisementPage = () => {
               <Button onClick={onLove}>
                 {selectedAdvertisement.lovers.some((lover) => lover.userId === user.id)
                   ? "Unlove this advertisement"
-                  : "Click Here to Love this advertisement"}
+                  : "❤️❤️ Click Here to Love this advertisement ❤️❤️"}
               </Button>
             </Row>
           </Row>

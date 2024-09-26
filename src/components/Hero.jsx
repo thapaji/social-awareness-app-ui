@@ -3,10 +3,13 @@ import { useSelector } from "react-redux";
 // import { CommonCards } from "./CommonCards";
 import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { Status } from "../pages/user/Status";
+import { useUser } from "@clerk/clerk-react";
 
 const Hero = () => {
   const causes = useSelector((state) => state.causes.causes);
   const events = useSelector((state) => state.events.events);
+  const { user } = useUser();
 
   const handleSelect = (selectedIndex) => {
     setIndex(selectedIndex);
@@ -14,6 +17,11 @@ const Hero = () => {
 
   return (
     <>
+      {user?.id && (
+        <Row>
+          <Status />
+        </Row>
+      )}
       <Row className="mb-4">
         <h3 className="text-center mb-4">{causes[0].title}</h3>
         <h5 className="text-dark">Cause Created By: {causes[0].createdBy}</h5>
