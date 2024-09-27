@@ -65,7 +65,7 @@ const AdminEvents = () => {
                   </Card>
                 </td>
                 <td>{event.description.slice(0, 140) + "..."}</td>
-                <td>{event.cause.causeTitle}</td>
+                <td>{event.cause?.causeTitle}</td>
                 <td>{new Date(event.date).toLocaleDateString()}</td>
                 <td>{event.location}</td>
                 <td>

@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { createAdvertisement, updateAdvertisement } from "../../pages/business/businessAction";
 import { useForm } from "react-hook-form";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Image } from "react-bootstrap";
 
 const AdvertisementForm = ({ adToEdit, onCancel }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const {
     register,
@@ -21,8 +22,8 @@ const AdvertisementForm = ({ adToEdit, onCancel }) => {
         title: adToEdit.title,
         business: adToEdit.business,
         description: adToEdit.description,
-        image: null,
       });
+      setImageFile(null);
     } else {
       reset();
     }
@@ -31,7 +32,15 @@ const AdvertisementForm = ({ adToEdit, onCancel }) => {
   const onSubmit = async (data) => {
     setLoading(true);
     const formData = new FormData();
-    formData.append("image", data.image[0]);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    } else if (!adToEdit) {
+      alert("Image is required");
+      setLoading(false);
+      return;
+    }
+
     formData.append("title", data.title);
     formData.append("business", data.business);
     formData.append("description", data.description);
@@ -44,6 +53,10 @@ const AdvertisementForm = ({ adToEdit, onCancel }) => {
 
     setLoading(false);
     onCancel();
+  };
+
+  const handleImageChange = (event) => {
+    setImageFile(event.target.files[0]);
   };
 
   return (
@@ -83,15 +96,25 @@ const AdvertisementForm = ({ adToEdit, onCancel }) => {
       </Form.Group>
 
       <Form.Group controlId="formImage" className="mb-4">
-        <Form.Label>Image</Form.Label>
+        <Form.Label>Image Upload</Form.Label>
         <Form.Control
           type="file"
           accept="image/*"
-          {...register("image", { required: "Image is required" })}
+          onChange={handleImageChange}
           isInvalid={!!errors.image}
         />
         <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
       </Form.Group>
+
+      {adToEdit && adToEdit.image && (
+        <div className="mb-3">
+          <Image src={adToEdit.image} rounded thumbnail />
+          <Form.Group controlId="changeImage" className="mt-2">
+            <Form.Label>Change Image?</Form.Label>
+            <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+          </Form.Group>
+        </div>
+      )}
 
       <div>
         <Button variant="primary" type="submit" disabled={loading}>

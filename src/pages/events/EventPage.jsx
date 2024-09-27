@@ -21,6 +21,7 @@ const EventPage = () => {
     reset,
     formState: { errors },
   } = useForm();
+  
 
   const onParticipate = () => {
     if (!user) {
@@ -42,8 +43,13 @@ const EventPage = () => {
         { userId: user.id, username: user.fullName, image: user.imageUrl },
       ];
     }
-
-    const eventToEdit = { ...selectedEvent, participants: updatedParticipants };
+    const eventToEdit = {
+      ...selectedEvent,
+      participants: updatedParticipants,
+      causeId: selectedEvent.cause.causeId,
+      causeTitle: selectedEvent.cause.causeTitle,
+      cause: null,
+    };
     dispatch(updateEvent(selectedEvent._id, eventToEdit, false));
 
     const message = isUserParticipant
@@ -64,6 +70,9 @@ const EventPage = () => {
         ...comments,
         { username: user.fullName, comment: data.comment, image: user.imageUrl },
       ],
+      causeId: selectedEvent.cause.causeId,
+      causeTitle: selectedEvent.cause.causeTitle,
+      cause: null,
     };
     dispatch(updateEvent(selectedEvent._id, eventToEdit, false));
     reset();
@@ -78,7 +87,7 @@ const EventPage = () => {
             <img src={selectedEvent.image} alt={selectedEvent.title} className="event-image" />
           </Row>
           <Row>
-            <h2 className="mb-4">Supporting: {selectedEvent.cause.causeTitle}</h2>
+            <h2 className="mb-4">Supporting: {selectedEvent?.cause?.causeTitle}</h2>
             <Row className="mb-4">
               <Col>Date: {selectedEvent.date.slice(0, 10)}</Col>
               <Col>Location: {selectedEvent.location}</Col>

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Image } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { createCause, modifyCause } from "../../pages/cause/causeAction";
 import { useUser } from "@clerk/clerk-react";
@@ -9,6 +9,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
   const dispatch = useDispatch();
   const { user } = useUser();
   const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null); 
 
   const {
     register,
@@ -25,6 +26,7 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         category: causeToEdit.category,
         createdBy: causeToEdit.createdBy,
       });
+      setImageFile(null); 
     } else {
       reset({
         createdBy: user?.fullName || "",
@@ -35,19 +37,18 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
   const onSubmit = async (data) => {
     setLoading(true);
 
-    if (!data.image[0]) {
-      alert("Image is required");
-      setLoading(false);
-      return;
-    }
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
     formData.append("createdBy", user.fullName);
-    if (data.image[0]) {
-      formData.append("image", data.image[0]);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    } else if (!causeToEdit) {
+      alert("Image is required");
+      setLoading(false);
+      return;
     }
 
     if (causeToEdit) {
@@ -57,6 +58,10 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
     }
     onCancel();
     setLoading(false);
+  };
+
+  const handleImageChange = (event) => {
+    setImageFile(event.target.files[0]);
   };
 
   return (
@@ -100,16 +105,33 @@ const CauseForm = ({ causeToEdit, onCancel }) => {
         <Form.Control.Feedback type="invalid">{errors.category?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formImage" className="mb-4">
-        <Form.Label>Image Upload</Form.Label>
-        <Form.Control
-          type="file"
-          {...register("image", { required: "Image is required" })}
-          accept="image/*"
-          isInvalid={!!errors.image}
-        />
-        <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
-      </Form.Group>
+      {!causeToEdit && (
+        <Form.Group controlId="formImage" className="mb-4">
+          <Form.Label>Image Upload</Form.Label>
+          <Form.Control
+            type="file"
+            {...register("image", { required: "Image is required" })}
+            accept="image/*"
+            onChange={handleImageChange} 
+            isInvalid={!!errors.image}
+          />
+          <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
+        </Form.Group>
+      )}
+
+      {causeToEdit && causeToEdit.image && (
+        <div className="mb-3">
+          <Image src={causeToEdit.image} rounded thumbnail />
+          <Form.Group controlId="changeImage" className="mt-2">
+            <Form.Label>Change Image?</Form.Label>
+            <Form.Control
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange} 
+            />
+          </Form.Group>
+        </div>
+      )}
 
       <div>
         <Button variant="primary" type="submit" disabled={loading}>

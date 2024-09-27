@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvent, updateEvent } from "../../pages/events/eventActions";
 
 const EventForm = ({ eventToEdit, onCancel }) => {
   const dispatch = useDispatch();
   const causes = useSelector((state) => state.causes.causes);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
+  const [imageFile, setImageFile] = useState(null);
 
   const {
     register,
@@ -23,10 +24,10 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         description: eventToEdit.description,
         cause: eventToEdit.cause.causeId,
         causeTitle: eventToEdit.cause.causeTitle,
-        date: eventToEdit.date,
+        date: eventToEdit.date.slice(0, 10),
         location: eventToEdit.location,
-        image: eventToEdit.image,
       });
+      setImageFile(null);
     } else if (causes && causes.length > 0) {
       reset({
         cause: "",
@@ -38,7 +39,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
   }, [eventToEdit, reset, causes]);
 
   const onSubmit = async (data) => {
-    setLoading(true); 
+    setLoading(true);
     const selectedCause = causes.find((cause) => cause._id === data.cause);
 
     const formData = new FormData();
@@ -48,15 +49,22 @@ const EventForm = ({ eventToEdit, onCancel }) => {
     formData.append("causeTitle", selectedCause?.title);
     formData.append("date", new Date(data.date).toISOString());
     formData.append("location", data.location);
-    formData.append("image", data.image[0]);
+
+    if (imageFile) {
+      formData.append("image", imageFile);
+    }
 
     if (eventToEdit) {
       await dispatch(updateEvent(eventToEdit._id, formData));
     } else {
       await dispatch(addEvent(formData));
     }
-    setLoading(false); 
+    setLoading(false);
     onCancel();
+  };
+
+  const handleImageChange = (event) => {
+    setImageFile(event.target.files[0]);
   };
 
   return (
@@ -121,18 +129,32 @@ const EventForm = ({ eventToEdit, onCancel }) => {
           {...register("location", { required: "Location is required" })}
           isInvalid={!!errors.location}
         />
+        <Form.Control.Feedback type="invalid">{errors.location?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formImage" className="mb-4">
-        <Form.Label>Image Upload</Form.Label>
-        <Form.Control
-          type="file"
-          {...register("image", { required: "Image is required" })}
-          accept="image/*"
-          isInvalid={!!errors.image}
-        />
-        <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
-      </Form.Group>
+      {!eventToEdit && (
+        <Form.Group controlId="formImage" className="mb-4">
+          <Form.Label>Image Upload</Form.Label>
+          <Form.Control
+            type="file"
+            {...register("image", { required: "Image is required" })}
+            accept="image/*"
+            onChange={handleImageChange}
+            isInvalid={!!errors.image}
+          />
+          <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
+        </Form.Group>
+      )}
+
+      {eventToEdit && eventToEdit.image && (
+        <div className="mb-3">
+          <Image src={eventToEdit.image} rounded thumbnail />
+          <Form.Group controlId="changeImage" className="mt-2">
+            <Form.Label>Change Image?</Form.Label>
+            <Form.Control type="file" accept="image/*" onChange={handleImageChange} />
+          </Form.Group>
+        </div>
+      )}
 
       <Button variant="primary" type="submit" disabled={loading}>
         {loading ? "Loading..." : eventToEdit ? "Update Event" : "Add Event"}
