@@ -2,14 +2,13 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button, Card, Spinner } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import { createCause } from "../../pages/cause/causeAction";
+import { createAdvertisement } from "../../pages/business/businessAction";
 import { useUser } from "@clerk/clerk-react";
 import { FaImage } from "react-icons/fa";
 
-export const Status = () => {
+const AdvertStatus = () => {
   const { user } = useUser();
   const dispatch = useDispatch();
-
   const [loading, setLoading] = useState(false);
 
   const {
@@ -31,11 +30,10 @@ export const Status = () => {
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
-    formData.append("category", data.category);
-    formData.append("createdBy", user.fullName);
+    formData.append("business", data.business);
     formData.append("image", data.image[0]);
 
-    await dispatch(createCause(formData));
+    await dispatch(createAdvertisement(formData));
     reset();
     setLoading(false);
   };
@@ -49,42 +47,44 @@ export const Status = () => {
               <img
                 src={user.imageUrl}
                 alt={user.username}
-                className="lover-image"
-                style={{ width: "50px", height: "50px", borderRadius: "50%" }}
+                className="rounded-circle"
+                style={{ width: "50px", height: "50px" }}
               />
               <Form.Control
                 type="text"
-                placeholder="What's your cause?"
+                placeholder="What's your advertisement?"
                 className="border-0 fs-5 ms-3"
                 style={{ fontWeight: "bold" }}
                 {...register("title", { required: "Title is required" })}
                 isInvalid={!!errors.title}
               />
+              <Form.Control.Feedback type="invalid">{errors.title?.message}</Form.Control.Feedback>
             </div>
 
             <Form.Control
               as="textarea"
               rows={3}
-              placeholder="Describe your cause"
+              placeholder="Describe your advertisement"
               className="border-0 mb-3"
               style={{ resize: "none" }}
               {...register("description", { required: "Description is required" })}
               isInvalid={!!errors.description}
             />
+            <Form.Control.Feedback type="invalid">
+              {errors.description?.message}
+            </Form.Control.Feedback>
 
-            <Form.Group controlId="statusCategory" className="mb-3">
+            <Form.Group controlId="formBusiness" className="mb-3">
               <Form.Control
-                as="select"
-                {...register("category", { required: "Category is required" })}
+                type="text"
+                placeholder="Business Name"
                 className="border-0"
-                isInvalid={!!errors.category}
-              >
-                <option value="">Select Category</option>
-                <option value="Education">Education</option>
-                <option value="Health">Health</option>
-                <option value="Environment">Environment</option>
-                <option value="Social">Social</option>
-              </Form.Control>
+                {...register("business", { required: "Business Name is required" })}
+                isInvalid={!!errors.business}
+              />
+              <Form.Control.Feedback type="invalid">
+                {errors.business?.message}
+              </Form.Control.Feedback>
             </Form.Group>
 
             <div className="d-flex justify-content-between align-items-center">
@@ -102,12 +102,13 @@ export const Status = () => {
                 </Form.Control.Feedback>
               </div>
             </div>
+
             <div className="text-end mt-3">
               <Button type="submit" variant="primary" className="rounded-pill px-4">
                 {loading ? (
                   <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
                 ) : (
-                  "Post Cause"
+                  "Post Advertisement"
                 )}
               </Button>
             </div>
@@ -117,3 +118,5 @@ export const Status = () => {
     </Card>
   );
 };
+
+export default AdvertStatus;

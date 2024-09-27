@@ -1,28 +1,44 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-// import { CommonCards } from "./CommonCards";
 import { Button, Col, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Accordion from "react-bootstrap/Accordion";
 import { Status } from "../pages/user/Status";
+import { EventStatus } from "../pages/user/EventStatus";
 import { useUser } from "@clerk/clerk-react";
+import AdvertStatus from "../pages/user/AdvertStatus";
 
 const Hero = () => {
   const causes = useSelector((state) => state.causes.causes);
   const events = useSelector((state) => state.events.events);
   const { user } = useUser();
 
-  const handleSelect = (selectedIndex) => {
-    setIndex(selectedIndex);
-  };
-
   return (
     <>
       {user?.id && (
-        <Row>
-          <Status />
-        </Row>
+        <Accordion>
+          <Accordion.Item eventKey="0">
+            <Accordion.Header>Create New Cause +</Accordion.Header>
+            <Accordion.Body>
+              <Status />
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="1">
+            <Accordion.Header>Create New Event +</Accordion.Header>
+            <Accordion.Body>
+              <EventStatus />
+            </Accordion.Body>
+          </Accordion.Item>
+          <Accordion.Item eventKey="2">
+            <Accordion.Header>Create New Advertisement +</Accordion.Header>
+            <Accordion.Body>
+              <AdvertStatus />
+            </Accordion.Body>
+          </Accordion.Item>
+        </Accordion>
       )}
-      <Row className="mb-4">
+
+      <Row className="my-4">
         <h3 className="text-center mb-4">{causes[0].title}</h3>
         <h5 className="text-dark">Cause Created By: {causes[0].createdBy}</h5>
         <Col>
@@ -33,6 +49,7 @@ const Hero = () => {
         </Link>
         <hr className="mt-4" />
       </Row>
+
       <Row>
         <Col>
           <h3 className="text-center mb-4">
@@ -60,37 +77,6 @@ const Hero = () => {
       </Row>
     </>
   );
-  // <Carousel activeIndex={index} onSelect={handleSelect}>
-  //   {/* <div className="darken-img"></div> */}
-  //   <Carousel.Item>
-  //     <img className="d-block w-100" src={img1} alt="First slide" />
-  //     <div className="dark-overlay"></div>
-  //     <Carousel.Caption>
-  //       <h2>Call For Justice!</h2>
-  //     </Carousel.Caption>
-  //   </Carousel.Item>
-  //   <Carousel.Item>
-  //     <img className="d-block w-100" src={img2} alt="First slide" />
-  //     <div className="dark-overlay"></div>
-  //     <Carousel.Caption>
-  //       <h2>Go Green!</h2>
-  //     </Carousel.Caption>
-  //   </Carousel.Item>
-  //   <Carousel.Item>
-  //     <img className="d-block w-100" src={img3} alt="First slide" />
-  //     <div className="dark-overlay"></div>
-  //     <Carousel.Caption>
-  //       <h2>Save Our Sons!</h2>
-  //     </Carousel.Caption>
-  //   </Carousel.Item>
-  //   <Carousel.Item>
-  //     <img className="d-block w-100" src={img4} alt="First slide" />
-  //     <div className="dark-overlay"></div>
-  //     <Carousel.Caption>
-  //       <h2>End Racism!</h2>
-  //     </Carousel.Caption>
-  //   </Carousel.Item>
-  // </Carousel>
 };
 
 export default Hero;

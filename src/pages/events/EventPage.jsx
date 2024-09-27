@@ -21,7 +21,6 @@ const EventPage = () => {
     reset,
     formState: { errors },
   } = useForm();
-  
 
   const onParticipate = () => {
     if (!user) {
@@ -121,11 +120,13 @@ const EventPage = () => {
               )}
             </Row>
             <Row>
-              <Button onClick={onParticipate}>
-                {selectedEvent.participants.some((participant) => participant.userId === user.id)
-                  ? "Opt Out of Event"
-                  : "Click Here to Participate"}
-              </Button>
+              {user && (
+                <Button onClick={onParticipate}>
+                  {selectedEvent.participants.some((participant) => participant.userId === user.id)
+                    ? "Opt Out of Event"
+                    : "Click Here to Participate"}
+                </Button>
+              )}
             </Row>
           </Row>
 
@@ -173,23 +174,25 @@ const EventPage = () => {
               )}
             </Row>
 
-            <Form onSubmit={handleSubmit(onComment)}>
-              <Form.Group controlId="comment">
-                <Form.Label>Add a comment</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  {...register("comment", { required: "Comment is required" })}
-                  isInvalid={errors.comment}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.comment?.message}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button type="submit" className="mt-3">
-                Post Comment
-              </Button>
-            </Form>
+            {user && (
+              <Form onSubmit={handleSubmit(onComment)}>
+                <Form.Group controlId="comment">
+                  <Form.Label>Add a comment</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    {...register("comment", { required: "Comment is required" })}
+                    isInvalid={errors.comment}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.comment?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Button type="submit" className="mt-3">
+                  Post Comment
+                </Button>
+              </Form>
+            )}
           </Row>
         </Container>
       </div>

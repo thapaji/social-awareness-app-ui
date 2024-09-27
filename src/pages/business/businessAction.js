@@ -18,10 +18,10 @@ export const getAdvertisements = () => async (dispatch) => {
 
 export const createAdvertisement = (advertisement) => async (dispatch) => {
     try {
-        const { status } = await addAdvertisementAPI(advertisement);
+        const { status, data } = await addAdvertisementAPI(advertisement);
         if (status === 'success') {
             dispatch(getAdvertisements());
-            toast.success('Advertisement created successfully');
+            toast.success(data.message || 'Advertisement created successfully. Wait for Admin to activate this add before it shows up.');
         } else {
             toast.error('Failed to create advertisement');
         }
@@ -30,12 +30,12 @@ export const createAdvertisement = (advertisement) => async (dispatch) => {
     }
 };
 
-export const updateAdvertisement = (id, advertisement) => async (dispatch) => {
+export const updateAdvertisement = (id, advertisement, showToast) => async (dispatch) => {
     try {
         const { status, message } = await updateAdvertisementAPI(id, advertisement);
         if (status === 'success') {
             dispatch(getAdvertisements());
-            toast.success(message || 'Advertisement updated successfully');
+            showToast && toast.success(message || 'Advertisement updated successfully');
         } else {
             toast.error(message || 'Failed to update advertisement');
         }

@@ -6,6 +6,8 @@ import { useParams } from "react-router-dom";
 import { updateAdvertisement } from "./businessAction";
 import { UserLayout } from "../../components/layouts/UserLayout";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { toast } from "react-toastify";
+import Rating from "./Rating";
 
 const AdvertisementPage = () => {
   const { id } = useParams();
@@ -26,12 +28,12 @@ const AdvertisementPage = () => {
       return toast.warn("Login to hit love.");
     }
 
-    const hasUserLoved = selectedAdvertisement.lovers.some((lovers) => lovers.userId === user.id);
+    const hasUserLoved = selectedAdvertisement.lovers.some((lover) => lover.userId === user.id);
 
     let updatedLovers;
 
     if (hasUserLoved) {
-      updatedLovers = selectedAdvertisement.lovers.filter((lovers) => lovers.userId !== user.id);
+      updatedLovers = selectedAdvertisement.lovers.filter((lover) => lover.userId !== user.id);
     } else {
       updatedLovers = [
         ...selectedAdvertisement.lovers,
@@ -87,7 +89,7 @@ const AdvertisementPage = () => {
           </Row>
 
           <Row>
-            <h3>People who loves this:</h3>
+            <h3>People who love this:</h3>
             <Row>
               {selectedAdvertisement.lovers.length > 0 ? (
                 selectedAdvertisement.lovers.map((lover) => (
@@ -110,12 +112,18 @@ const AdvertisementPage = () => {
               )}
             </Row>
             <Row>
-              <Button onClick={onLove}>
-                {selectedAdvertisement.lovers.some((lover) => lover.userId === user.id)
-                  ? "Unlove this advertisement"
-                  : "❤️❤️ Click Here to Love this advertisement ❤️❤️"}
-              </Button>
+              {user && (
+                <Button onClick={onLove}>
+                  {selectedAdvertisement.lovers.some((lover) => lover.userId === user.id)
+                    ? "Unlove this advertisement"
+                    : "❤️❤️ Click Here to Love this advertisement ❤️❤️"}
+                </Button>
+              )}
             </Row>
+          </Row>
+
+          <Row className="mt-4 mb-4">
+            <Rating advertisement={selectedAdvertisement} user={user} />
           </Row>
 
           <Row className="mt-5">
@@ -162,23 +170,25 @@ const AdvertisementPage = () => {
               )}
             </Row>
 
-            <Form onSubmit={handleSubmit(onComment)}>
-              <Form.Group controlId="comment">
-                <Form.Label>Add a comment</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  rows={3}
-                  {...register("comment", { required: "Comment is required" })}
-                  isInvalid={errors.comment}
-                />
-                <Form.Control.Feedback type="invalid">
-                  {errors.comment?.message}
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button type="submit" className="mt-3">
-                Post Comment
-              </Button>
-            </Form>
+            {user && (
+              <Form onSubmit={handleSubmit(onComment)}>
+                <Form.Group controlId="comment">
+                  <Form.Label>Add a comment</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={3}
+                    {...register("comment", { required: "Comment is required" })}
+                    isInvalid={errors.comment}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.comment?.message}
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <Button type="submit" className="mt-3">
+                  Post Comment
+                </Button>
+              </Form>
+            )}
           </Row>
         </Container>
       </div>
