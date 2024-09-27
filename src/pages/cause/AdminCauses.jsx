@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
-import { Table, Button, Row, Col, Card } from "react-bootstrap";
+import { Table, Button, Row, Col, Card, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
@@ -9,9 +9,15 @@ import { getCauses, removeCause } from "./causeAction";
 const AdminCauses = () => {
   const dispatch = useDispatch();
   const causes = useSelector((state) => state.causes.causes);
+  const [loadingId, setLoadingId] = useState(null);
 
-  const handleDelete = (id) => {
-    dispatch(removeCause(id));
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this cause?");
+    if (confirmed) {
+      setLoadingId(id);
+      await dispatch(removeCause(id));
+      setLoadingId(null);
+    }
   };
 
   return (
@@ -54,7 +60,7 @@ const AdminCauses = () => {
                     <Card.Img variant="bottom" src={cause.image} />
                   </Card>
                 </td>
-                <td>{cause.description}</td>
+                <td>{cause.description.slice(0, 140) + "..."}</td>
                 <td>{cause.category}</td>
                 <td>{cause.createdBy}</td>
                 <td>
@@ -63,8 +69,16 @@ const AdminCauses = () => {
                       <FaEdit />
                     </Button>
                   </Link>
-                  <Button variant="danger" onClick={() => handleDelete(cause._id)}>
-                    <FaTrash />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(cause._id)}
+                    disabled={loadingId === cause._id}
+                  >
+                    {loadingId === cause._id ? (
+                      <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+                    ) : (
+                      <FaTrash />
+                    )}
                   </Button>
                 </td>
               </tr>

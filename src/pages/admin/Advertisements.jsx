@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
-import { Button, Card, Col, Row, Table } from "react-bootstrap";
+import { Button, Card, Col, Row, Table, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaEdit, FaPlus, FaToggleOn, FaToggleOff, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,10 +9,14 @@ import { deleteAdvertisement, updateAdvertisement } from "../business/businessAc
 const Advertisements = () => {
   const dispatch = useDispatch();
   const advertisements = useSelector((state) => state.business.advertisements);
+  const [loadingId, setLoadingId] = useState(null);
 
-  const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this advertisement?")) {
-      dispatch(deleteAdvertisement(id));
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Are you sure you want to delete this advertisement?");
+    if (confirmed) {
+      setLoadingId(id);
+      await dispatch(deleteAdvertisement(id));
+      setLoadingId(null);
     }
   };
 
@@ -78,8 +82,16 @@ const Advertisements = () => {
                       <FaEdit />
                     </Button>
                   </Link>
-                  <Button variant="danger" onClick={() => handleDelete(ad._id)}>
-                    <FaTrash />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(ad._id)}
+                    disabled={loadingId === ad._id}
+                  >
+                    {loadingId === ad._id ? (
+                      <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+                    ) : (
+                      <FaTrash />
+                    )}
                   </Button>
                 </td>
               </tr>

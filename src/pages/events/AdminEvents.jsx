@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Button, Row, Col, Card } from "react-bootstrap";
+import { Table, Button, Row, Col, Card, Spinner } from "react-bootstrap";
 import { fetchEvents, deleteEvent } from "./eventActions";
 import { Link, useNavigate } from "react-router-dom";
 import { AdminLayout } from "../../components/layouts/AdminLayout";
@@ -10,14 +10,17 @@ const AdminEvents = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const events = useSelector((state) => state.events.events);
+  const [loadingId, setLoadingId] = useState(null);
 
   const handleEdit = (id) => {
     navigate(`/admin/events/edit/${id}`);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
-      dispatch(deleteEvent(id));
+      setLoadingId(id);
+      await dispatch(deleteEvent(id));
+      setLoadingId(null);
     }
   };
 
@@ -52,7 +55,6 @@ const AdminEvents = () => {
             {events.map((event) => (
               <tr key={event._id}>
                 <td>
-                  {" "}
                   <Card>
                     <Card.Body>
                       <Card.Title>
@@ -62,7 +64,7 @@ const AdminEvents = () => {
                     <Card.Img variant="bottom" src={event.image} />
                   </Card>
                 </td>
-                <td>{event.description}</td>
+                <td>{event.description.slice(0, 140) + "..."}</td>
                 <td>{event.cause.causeTitle}</td>
                 <td>{new Date(event.date).toLocaleDateString()}</td>
                 <td>{event.location}</td>
@@ -72,8 +74,16 @@ const AdminEvents = () => {
                       <FaEdit />
                     </Button>
                   </Link>
-                  <Button variant="danger" onClick={() => handleDelete(event._id)}>
-                    <FaTrash />
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(event._id)}
+                    disabled={loadingId === event._id}
+                  >
+                    {loadingId === event._id ? (
+                      <Spinner animation="border" size="sm" role="status" aria-hidden="true" />
+                    ) : (
+                      <FaTrash />
+                    )}
                   </Button>
                 </td>
               </tr>

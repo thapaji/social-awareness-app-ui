@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,8 +6,8 @@ import { addEvent, updateEvent } from "../../pages/events/eventActions";
 
 const EventForm = ({ eventToEdit, onCancel }) => {
   const dispatch = useDispatch();
-
-  const causes = useSelector((state) => state.causes.causes); // Get causes from Redux
+  const causes = useSelector((state) => state.causes.causes);
+  const [loading, setLoading] = useState(false); 
 
   const {
     register,
@@ -29,37 +29,39 @@ const EventForm = ({ eventToEdit, onCancel }) => {
       });
     } else if (causes && causes.length > 0) {
       reset({
-        cause: '',
-        causeTitle: '',
+        cause: "",
+        causeTitle: "",
       });
     } else {
       reset();
     }
   }, [eventToEdit, reset, causes]);
 
-  const onSubmit = (data) => {
-    const selectedCause = causes.find((cause) => cause._id === data.cause); 
+  const onSubmit = async (data) => {
+    setLoading(true); 
+    const selectedCause = causes.find((cause) => cause._id === data.cause);
 
-    const formData = {
-      title: data.title,
-      description: data.description,
-      cause: { causeId: selectedCause._id, causeTitle: selectedCause.title }, 
-      date: new Date(data.date).toISOString(),
-      location: data.location,
-      image: data.image, 
-    };
+    const formData = new FormData();
+    formData.append("title", data.title);
+    formData.append("description", data.description);
+    formData.append("causeId", selectedCause?._id);
+    formData.append("causeTitle", selectedCause?.title);
+    formData.append("date", new Date(data.date).toISOString());
+    formData.append("location", data.location);
+    formData.append("image", data.image[0]);
 
     if (eventToEdit) {
-      dispatch(updateEvent(eventToEdit._id, formData));
+      await dispatch(updateEvent(eventToEdit._id, formData));
     } else {
-      dispatch(addEvent(formData));
+      await dispatch(addEvent(formData));
     }
+    setLoading(false); 
     onCancel();
   };
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <Form.Group controlId="formTitle">
+      <Form.Group controlId="formTitle" className="mb-3">
         <Form.Label>Title</Form.Label>
         <Form.Control
           type="text"
@@ -70,7 +72,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         <Form.Control.Feedback type="invalid">{errors.title?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formDescription">
+      <Form.Group controlId="formDescription" className="mb-3">
         <Form.Label>Description</Form.Label>
         <Form.Control
           as="textarea"
@@ -82,16 +84,16 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         <Form.Control.Feedback type="invalid">{errors.description?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formCause">
+      <Form.Group controlId="formCause" className="mb-3">
         <Form.Label>Cause</Form.Label>
         <Form.Control
           as="select"
           {...register("cause", { required: "Cause is required" })}
           isInvalid={!!errors.cause}
         >
-           <option key='' value=''>
-              -- Select a cause --
-            </option>
+          <option key="" value="">
+            -- Select a cause --
+          </option>
           {causes.map((cause) => (
             <option key={cause._id} value={cause._id}>
               {cause.title}
@@ -101,7 +103,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         <Form.Control.Feedback type="invalid">{errors.cause?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formDate">
+      <Form.Group controlId="formDate" className="mb-3">
         <Form.Label>Date</Form.Label>
         <Form.Control
           type="date"
@@ -111,7 +113,7 @@ const EventForm = ({ eventToEdit, onCancel }) => {
         <Form.Control.Feedback type="invalid">{errors.date?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formLocation">
+      <Form.Group controlId="formLocation" className="mb-3">
         <Form.Label>Location</Form.Label>
         <Form.Control
           type="text"
@@ -119,24 +121,23 @@ const EventForm = ({ eventToEdit, onCancel }) => {
           {...register("location", { required: "Location is required" })}
           isInvalid={!!errors.location}
         />
-        <Form.Control.Feedback type="invalid">{errors.location?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Form.Group controlId="formImage">
-        <Form.Label>Image URL</Form.Label>
+      <Form.Group controlId="formImage" className="mb-4">
+        <Form.Label>Image Upload</Form.Label>
         <Form.Control
-          type="text"
-          placeholder="Enter image URL"
-          {...register("image", { required: "Image URL is required" })}
+          type="file"
+          {...register("image", { required: "Image is required" })}
+          accept="image/*"
           isInvalid={!!errors.image}
         />
         <Form.Control.Feedback type="invalid">{errors.image?.message}</Form.Control.Feedback>
       </Form.Group>
 
-      <Button variant="primary" type="submit">
-        {eventToEdit ? "Update Event" : "Add Event"}
+      <Button variant="primary" type="submit" disabled={loading}>
+        {loading ? "Loading..." : eventToEdit ? "Update Event" : "Add Event"}
       </Button>
-      <Button variant="secondary" onClick={onCancel}>
+      <Button variant="secondary" onClick={onCancel} className="ms-4">
         Cancel
       </Button>
     </Form>

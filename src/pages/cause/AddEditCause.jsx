@@ -18,6 +18,7 @@ const AddEditCause = () => {
     <AdminLayout>
       <div className="accent-bg p-4">
         <h1 className="dash-heading">{id ? "Edit Cause" : "Add Cause"}</h1>
+        <hr />
         <CauseForm causeToEdit={causeToEdit} onCancel={handleCancel} />
       </div>
     </AdminLayout>

@@ -32,15 +32,15 @@ export const createAdvertisement = (advertisement) => async (dispatch) => {
 
 export const updateAdvertisement = (id, advertisement) => async (dispatch) => {
     try {
-        const { status } = await updateAdvertisementAPI(id, advertisement);
+        const { status, message } = await updateAdvertisementAPI(id, advertisement);
         if (status === 'success') {
             dispatch(getAdvertisements());
-            toast.success('Advertisement updated successfully');
+            toast.success(message || 'Advertisement updated successfully');
         } else {
-            toast.error('Failed to update advertisement');
+            toast.error(message || 'Failed to update advertisement');
         }
     } catch (error) {
-        toast.error('An error occurred while updating advertisement');
+        toast.error(message || 'An error occurred while updating advertisement');
     }
 };
 

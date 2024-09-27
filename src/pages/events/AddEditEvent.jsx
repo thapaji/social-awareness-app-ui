@@ -18,6 +18,7 @@ const AddEditEvent = () => {
     <AdminLayout>
       <div className="accent-bg p-4">
         <h1 className="dash-heading">{id ? "Edit Event" : "Add Event"}</h1>
+        <hr />
         <EventForm eventToEdit={eventToEdit} onCancel={handleCancel} />
       </div>
     </AdminLayout>

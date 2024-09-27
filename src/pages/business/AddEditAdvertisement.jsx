@@ -18,6 +18,7 @@ const AddEditAdvertisement = () => {
     <AdminLayout>
       <div className="accent-bg p-4">
         <h1 className="dash-heading">{id ? "Edit Advertisement" : "Add Advertisement"}</h1>
+        <hr />
         <AdvertisementForm adToEdit={adToEdit} onCancel={handleCancel} />
       </div>
     </AdminLayout>

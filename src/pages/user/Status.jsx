@@ -22,14 +22,18 @@ export const Status = () => {
   const onSubmit = async (data) => {
     setLoading(true);
 
+    if (!data.image[0]) {
+      alert("Image is required");
+      setLoading(false);
+      return;
+    }
+
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
     formData.append("category", data.category);
     formData.append("createdBy", user.fullName);
-    if (data.image[0]) {
-      formData.append("image", data.image[0]);
-    }
+    formData.append("image", data.image[0]);
 
     await dispatch(createCause(formData));
     reset();
@@ -88,10 +92,14 @@ export const Status = () => {
                 <FaImage size={20} className="me-2 text-muted" />
                 <Form.Control
                   type="file"
-                  {...register("image")}
+                  {...register("image", { required: "Image is required" })}
                   accept="image/*"
                   className="border-0"
+                  isInvalid={!!errors.image}
                 />
+                <Form.Control.Feedback type="invalid">
+                  {errors.image?.message}
+                </Form.Control.Feedback>
               </div>
             </div>
             <div className="text-end mt-3">
