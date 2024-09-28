@@ -1,30 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button, Card, Spinner, Alert, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useUser } from "@clerk/clerk-react";
 import { FaImage } from "react-icons/fa";
 import { addEvent } from "../events/eventActions";
+import { useJsApiLoader, StandaloneSearchBox } from "@react-google-maps/api";
+
+const googleApi = import.meta.env.VITE_GOOGLE_API_KEY;
+const libraries = ["places"];
 
 export const EventStatus = () => {
   const { user } = useUser();
   const dispatch = useDispatch();
   const causes = useSelector((state) => state.causes.causes);
+  const searchBoxRef = useRef(null);
 
   const [loading, setLoading] = useState(false);
   const [imagePreview, setImagePreview] = useState(null);
-//   const [successMessage, setSuccessMessage] = useState("");
-//   const [errorMessage, setErrorMessage] = useState("");
 
   const {
     register,
+    setValue,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
 
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: googleApi,
+    libraries,
+  });
+
   useEffect(() => {
-    // Reset the form on component mount
     reset();
   }, [reset]);
 
@@ -49,11 +58,9 @@ export const EventStatus = () => {
 
     try {
       await dispatch(addEvent(formData));
-    //   setSuccessMessage("Event created successfully!");
       reset();
       setImagePreview(null);
     } catch (error) {
-    //   setErrorMessage("Failed to create event. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -113,7 +120,7 @@ export const EventStatus = () => {
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId="eventLocation">
+                {/* <Form.Group controlId="eventLocation">
                   <Form.Label>Location</Form.Label>
                   <Form.Control
                     type="text"
@@ -121,6 +128,36 @@ export const EventStatus = () => {
                     {...register("location", { required: "Location is required" })}
                     isInvalid={!!errors.location}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    {errors.location?.message}
+                  </Form.Control.Feedback>
+                </Form.Group> */}
+                <Form.Group controlId="eventLocation">
+                  <Form.Label>Location</Form.Label>
+                  {isLoaded && (
+                    <StandaloneSearchBox
+                      onLoad={(ref) => (searchBoxRef.current = ref)}
+                      onPlacesChanged={() => {
+                        const places = searchBoxRef.current.getPlaces();
+                        if (places && places.length > 0) {
+                          const selectedPlace = places[0];
+                          setValue("location", selectedPlace.formatted_address);
+                        }
+                      }}
+                    >
+                      <>
+                        <Form.Control
+                          type="text"
+                          placeholder="Event location"
+                          {...register("location", { required: "Location is required" })}
+                          isInvalid={!!errors.location}
+                        />
+                        <Form.Control.Feedback type="invalid">
+                          {errors.location?.message}
+                        </Form.Control.Feedback>
+                      </>
+                    </StandaloneSearchBox>
+                  )}
                   <Form.Control.Feedback type="invalid">
                     {errors.location?.message}
                   </Form.Control.Feedback>

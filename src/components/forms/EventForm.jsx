@@ -1,18 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { addEvent, updateEvent } from "../../pages/events/eventActions";
+import {  useJsApiLoader, StandaloneSearchBox } from "@react-google-maps/api";
+
+const libraries = ["places"];
+const googleApi = import.meta.env.VITE_GOOGLE_API_KEY;
 
 const EventForm = ({ eventToEdit, onCancel }) => {
   const dispatch = useDispatch();
   const causes = useSelector((state) => state.causes.causes);
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const searchBoxRef = useRef(null);
+
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: googleApi,
+    libraries,
+  });
 
   const {
     register,
     handleSubmit,
+    setValue,
     reset,
     formState: { errors },
   } = useForm();
@@ -123,12 +135,25 @@ const EventForm = ({ eventToEdit, onCancel }) => {
 
       <Form.Group controlId="formLocation" className="mb-3">
         <Form.Label>Location</Form.Label>
-        <Form.Control
-          type="text"
-          placeholder="Enter location"
-          {...register("location", { required: "Location is required" })}
-          isInvalid={!!errors.location}
-        />
+        {isLoaded && (
+          <StandaloneSearchBox
+            onLoad={(ref) => (searchBoxRef.current = ref)}
+            onPlacesChanged={() => {
+              const places = searchBoxRef.current.getPlaces();
+              if (places && places.length > 0) {
+                const selectedPlace = places[0];
+                setValue("location", selectedPlace.formatted_address);
+              }
+            }}
+          >
+            <Form.Control
+              type="text"
+              placeholder="Enter location"
+              {...register("location", { required: "Location is required" })}
+              isInvalid={!!errors.location}
+            />
+          </StandaloneSearchBox>
+        )}
         <Form.Control.Feedback type="invalid">{errors.location?.message}</Form.Control.Feedback>
       </Form.Group>
 

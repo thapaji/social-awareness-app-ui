@@ -23,36 +23,34 @@ const Hero = () => {
               <Status />
             </Accordion.Body>
           </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Create New Event +</Accordion.Header>
-            <Accordion.Body>
-              <EventStatus />
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header>Create New Advertisement +</Accordion.Header>
-            <Accordion.Body>
-              <AdvertStatus />
-            </Accordion.Body>
-          </Accordion.Item>
         </Accordion>
       )}
 
       <Row className="my-4">
-        <h3 className="text-center mb-4">{causes[0].title}</h3>
-        <h5 className="text-dark">Cause Created By: {causes[0].createdBy}</h5>
+        <h3 className="text-center mb-4">{causes[0]?.title}</h3>
+        <h5 className="text-dark">Cause Created By: {causes[0]?.createdBy}</h5>
         <Col>
-          <img src={causes[0].image} alt={causes[0].title} />
+          <img src={causes[0]?.image} alt={causes[0]?.title} />
         </Col>
-        <Link to={"/need-support/awarness/" + causes[0]._id}>
+        <Link to={"/need-support/awarness/" + causes[0]?._id}>
           <Button className="mt-4">Learn More and Participate</Button>
         </Link>
         <hr className="mt-4" />
       </Row>
 
       <Row>
+        {user?.id && (
+          <Accordion>
+            <Accordion.Item eventKey="1">
+              <Accordion.Header>Create New Event +</Accordion.Header>
+              <Accordion.Body>
+                <EventStatus />
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        )}
         <Col>
-          <h3 className="text-center mb-4">
+          <h3 className="text-center my-4">
             {events[0].title.length > 30 ? events[0].title.slice(0, 30) + ".." : events[0].title}
           </h3>
           <h5 className="text-dark">Event Created By: {events[0].createdBy}</h5>
@@ -74,6 +72,18 @@ const Hero = () => {
           </Link>
         </Col>
         <hr className="mt-4" />
+      </Row>
+      <Row>
+        {user?.id && (
+          <Accordion>
+            <Accordion.Item eventKey="2">
+              <Accordion.Header>Create New Advertisement +</Accordion.Header>
+              <Accordion.Body>
+                <AdvertStatus />
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        )}
       </Row>
     </>
   );
